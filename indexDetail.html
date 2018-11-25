@@ -383,7 +383,7 @@ div{
         <div style="height:1.3rem;width:100%;"></div>
         <div class="footer flexRowBetween font34">
             <div class="footer1" @click="collect">
-                <img src="{{isCollect?'images/user_icon3_a.png':'collect.png'}}"/>
+                <img :src="isCollect?'images/user_icon3_a.png':'images/collect.png'"/>
             </div>
             <div class="footer1 flex">
                 <a href="tel://merchantData.phone" style="width:0.6rem;height:0.6rem;margin:0 auto;"><img src="images/phone.png"/></a>
