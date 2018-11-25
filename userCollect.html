@@ -54,7 +54,7 @@ a{color:#fff;}
 <div class="w750">
   <div class="job">
   <div class="w710" v-for="item in mainData">
-    <div class="job_list flexRowBetween">
+    <div class="job_list flexRowBetween" @click="intoDetail(item.id)">
       <div class="list_left">
         <div class="job_type avoidOverflow">{{item.title}}</div>
         <div class="treatment flex">
@@ -129,11 +129,12 @@ a{color:#fff;}
           const self = this;
           self.mainData = window.base.getStorageArray('collectData')
           console.log(self.mainData)
-        }
+        },
 
-
-
-        
+        intoDetail(art_id) {
+            var self = this;
+            window.location.href = "./indexDetail.html?id=" + art_id;
+        },  
            
         }
     });            
