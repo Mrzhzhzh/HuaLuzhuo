@@ -86,7 +86,7 @@
   <div class="user_sort">
     <div class="user_item flexRowBetween">
       <a style="width:98%;" href="userCash.html">
-       <div class="item_top font32">{{computeData?computeData:''}}.00</div>
+       <div class="item_top font32">{{computeData?computeData:'0'}}.00</div>
        <div class="item_bottom font34">已提现(元)</div>
       </a>
       <div class="vertical_line">
@@ -351,8 +351,6 @@
                       	  self.idData.push(res.info.data[i].child_no)
                       	};
                       	console.log(self.idData)
-                    }else{
-                        alert('数据错误')
                     }
                     self.numOne = self.distriDataOne.length;
                   self.distriGetTwo();

@@ -177,7 +177,13 @@ a{color:#fff;}
                       最高学历:
                   </div>
                   <div class="resume_info">
-                      <input placeholder="最高学历" v-model='submitData.highEdu'></input>
+                       <select   v-model='submitData.highEdu' style="width:1.2rem;height:0.72rem;float: right;">
+                        <option label="请选择" value='请选择'>请选择</option> 
+                        <option label="专科" value='专科'>专科</option>
+                        <option label="本科" value='本科'>本科</option>
+                        <option label="硕士" value='硕士'>硕士</option>
+                        <option label="博士" value='博士'>博士</option>
+                      </select>
                   </div>
               </div>
               <div class="bank_card flexRowBetween">
@@ -186,7 +192,7 @@ a{color:#fff;}
                       开始时间:
                   </div>
                   <div class="resume_info">
-                      <input placeholder="开始时间" v-model='submitData.startDate'></input>
+                      <input placeholder="开始时间" v-model='submitData.startDate' style="width:56%;float: right;" type="date"/>
                   </div>
               </div>
               <div class="bank_card flexRowBetween">
@@ -195,7 +201,7 @@ a{color:#fff;}
                       结束时间:
                   </div>
                   <div class="resume_info">
-                      <input placeholder="结束时间" v-model='submitData.endDate'></input>
+                      <input placeholder="结束时间" v-model='submitData.endDate' style="width:56%;float: right;" type="date"/>
                   </div>
               </div>
              
