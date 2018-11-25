@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>职位管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background:#f2f2f2;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #f2f2f2;
+}
+.w710{
+  height:2.62rem;
+  border-bottom:solid 1px #d9d9d9;
+  align-items:center;
+  display:flex;
+  background:#fff;
+}
+.user_sort{
+  height:0.7rem;
+  display:flex;
+  align-items:center;
+  width:100%;
+  background:#fff;
+  margin-bottom:.30rem;
+}
+.user_item{
+  height:.64rem;
+  width:50%;
+  text-align:center;
+}
+.item_bottom{
+  height:50%;
+}
+.item_bottom text{
+  color:#ed7101;
+}
+.vertical_line{
+  width:2%;
+  height:70%;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+  <div class="w750">
+      <div class="job" v-for="item in mainData">
+          <div class="w710">
+              <a class="job_list flexRowBetween" @click="intoDetailModify(item.id)">
+                  <div class="list_left" >
+                      <div class="job_type avoidOverflow">{{item.title}}</div>
+                      <div class="treatment flex">
+                          <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
+                      </div>
+                      <div class="job_company flexRowBetween" >
+                          <div class="company_img">
+                              <img src="images/navbar2-a.png">
+                          </div>
+                          <div class="company_introuce" >
+                              <div class="company_name avoidOverflow">{{item.user[0].name}}</div>
+                              <div class="send_datail flexRowBetween">
+                                  <div class="send_tiem font30">{{item.create_time}}</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="list_right">
+                      <div class="payment">{{item.price}}</div>
+                      <div class="hongbao">
+                          <div class="numner">¥{{item.distributionOne}}</div>
+                      </div>
+                  </div>
+              </a>
+          </div>
+          <div class="user_sort font38">
+              <a class="user_item flexRowBetween" :data-id="item.id"  @click="intoDetail">
+                  <div style="width:98%;">
+                      <div class="item_bottom" :data-id="item.id"  @click="intoDetail">收到报名
+                          <span class="color">({{item.orderItem.totalCount}})</span>
+                      </div>
+                  </div>
+                  <div class="vertical_line">
+                      <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+                  </div>
+              </a>
+              <a class="user_item flexRowBetween" href="merchantJobNow.html">
+                  <div style="width:98%;">
+                      <div class="item_bottom">已入职
+                          <span class="color"></span>
+                      </div>
+                  </div>
+              </a>
+              <!-- <a class="user_item flexRowBetween" href="merchantReword.html">
+                <div style="width:98%;">
+                  <div class="item_bottom">已发奖金
+                      <span class="color"></span>
+                  </div>
+                </div>
+              </a> -->
+          </div>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+          var callback = (res)=>{
+            this.productGet();
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+            productGet(){
+                const self = this;
+                const postData = {
+                  paginate:window.base.cloneForm(self.paginate),
+                  searchItem:{
+                      type:1,
+                      category_id:33,
+                      user_no:localStorage.getItem('merchant_no')
+                  }
+                };
+                
+                postData.getAfter = {
+                  user:{
+                      tableName:'userInfo',
+                      middleKey:'user_no',
+                      key:'user_no',
+                      searchItem:{
+                          status:1
+                      },
+                      condition:'='
+                  },
+                  orderItem:{
+                  	  tableName:'OrderItem',
+                      middleKey:'id',
+                      key:'product_id',
+                      searchItem:{
+                          status:1
+                      },
+                      condition:'=',
+                      compute:{
+                      	count:[
+                      	  'count','count',{status:1}
+                      	]
+                  	  }
+
+                  }
+
+                }
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData.push.apply(self.mainData,res.info.data);
+                    }else{
+                        alert('没有更多了')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.productGet(postData,callback);
+            },  
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./merchantResume.html?id=" + art_id;
+            },  
+
+            intoDetailModify(id) {
+                var self = this;
+                console.log(id)
+               window.location.href = "./merchantJobModify.html?id=" + id;
+               
+            },    
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

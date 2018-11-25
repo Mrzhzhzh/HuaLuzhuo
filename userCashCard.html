@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>绑定银行卡</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #fff;
+    overflow: hidden;
+}
+.input_before{
+  height:.74rem;
+  line-height:.74rem;
+  overflow:hidden;
+  font-size:.32rem;
+  color:#333; 
+}
+.bank_card input{
+  width:96%;
+  padding:0 2%;
+  border:solid 1px #ed7101;
+  height:.64rem;
+  line-height:.64rem;
+  font-size:.3rem;
+  border-radius:.10rem;
+}
+.bank_address{
+  height:3.28rem;
+  width:94%;
+  padding:0 3%;
+  border:solid 1px #ed7101;
+  border-radius:.10rem;
+}
+.adreess_provence{
+  width:15%;
+  font-size:.32rem;
+  color:#333;
+}
+.adreess_input{
+  width:85%;
+  font-size:#666;
+  font-size:.3rem;
+}
+.bank_card{
+  height: 1.8rem;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+<div style="width:75%;margin:.28rem auto">
+    <div style="width:100%;" class="bank_card">
+        <div class="input_before">
+            卡号:
+        </div>
+        <input placeholder="请输入卡号" v-model="submitData.bankNum"></input>
+    </div>
+    <div style="width:100%;" class="bank_card">
+        <div class="input_before">
+            开户名:
+        </div>
+        <input placeholder="请输入开户名" v-model="submitData.name"></input>
+    </div>
+    <div style="width:100%;" class="bank_card">
+        <div class="input_before">
+            开户行:
+        </div>
+        <input placeholder="请输入开户行" v-model="submitData.bank"></input>
+    </div>
+   
+</div>
+<div class="confirm_bind">
+   <div   v-on:click="submit"> 确认绑定</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  bank:'',
+                  bankNum:'',
+                  name:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+          var callback = (res)=>{
+            this.userGet()
+          };
+          window.base.getUserToken(callback);
+            
+
+        },
+
+        methods:{
+
+          userGet(){
+            const self = this;
+            const postData = {};
+            postData.token =localStorage.getItem('user_token');
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0];
+                self.submitData.bank = self.mainData.info.bank;
+                self.submitData.name = self.mainData.info.name; 
+                self.submitData.bankNum = self.mainData.info.bankNum; 
+              }
+            };
+             window.base.userGet(postData,callback);
+          },
+
+          userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token =localStorage.getItem('user_token');
+            postData.data = {};
+            postData.data = window.base.cloneForm(self.submitData);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('绑定成功')
+                
+                 window.location.href = "./userCash.html";
+               
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+          },
+          
+          submit(){
+            const self = this;
+            var phone = self.submitData.phone;
+            const pass = window.base.checkComplete(self.submitData);
+            if(pass){
+               
+                self.userInfoUpdate();       
+              
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

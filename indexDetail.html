@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>职位详情</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js" type="application/javascript"></script>
+<style type="text/css">
+    body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+    #allmap{height:150px;width:100%;}
+    #r-result{width:100%; font-size:14px;}
+</style>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=W0dj26r0e4nDYKmCvXNBWR0Edcemccau"></script>
+</head>
+<body>
+<style>
+div{
+    color:#666;
+}
+.w710{
+    align-items:center;
+    display:flex;
+}
+.job{
+    align-items:center;
+    display:flex;
+    height:3.4rem;
+    border-bottom:solid 1px #d9d9d9;
+}
+.job_list{
+    height:3.10rem;
+    width:100%;
+}
+.list_left{
+    width:100%;
+    height:3.10rem;
+}
+.list_right{
+    width:30%;
+    height:3.10rem;
+    text-align:right;
+}
+.job_type{
+    height:24%;
+    align-items:center;
+    display:flex;
+}
+.treatment{
+    height:30%;
+}
+.job_company{
+    height:58%;
+    width:100%;
+    display:flex;
+}
+.treatment_sort{
+    width:2rem;
+    height:0.40rem;
+    background:#f6f6f6;
+    text-align:center;
+    line-height:0.40rem;
+    margin-right:0.120rem;
+}
+.company_img{
+    width:16%;
+    height:100%;
+    align-items:center;
+    display:flex;
+}
+.company_img img{
+    width:0.6rem;
+    height:0.6rem;
+}
+.company_introuce{
+    width:84%;
+    height:100%;
+}
+.company_name{
+    width: 100%;
+    font-size:0.32rem;
+    color:#333;
+    height:33.33%;
+}
+.send_datail{
+    width:60%;
+}
+.send_tiem{
+    font-size:0.24rem;
+    color:#999;
+}
+.send_need{
+    font-size:0.22rem;
+    color:#666;
+}
+.payment{
+    height:50%;
+    font-size:0.32rem;
+    color:#ed7100;
+}
+.hongbao{
+    height:100%;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+.hongbao_money{
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:50%;
+    font-size:0.26rem;
+    text-align:center;
+    color:#fff;
+}
+.hongbao img{
+    width:0.76rem;
+    height:0.92rem;
+}
+.address{
+    color:#3d3d3d;
+}
+.job_address{
+    height:22%;
+}
+.sort_items{
+    margin-right:0.18rem;
+}
+.sort_items text{
+    margin-left:0.16rem;
+}
+.sort{
+    width:100%;
+    align-items:center;
+    border:none;
+    height:auto;
+}
+.reward{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+}
+.reward_detail{
+    padding:0.20rem 0;
+}
+.reward_detail view{
+    font-size:0.3rem;
+    color:#666;
+    line-height:0.540rem;
+}
+.share .share1{
+    width:30%;
+    height:0.620rem;
+    line-height:0.620rem;
+    text-align:center;
+}
+.share2{
+    background:#ed7101;
+    border-radius:0.10rem;
+    color:#fff;
+}
+.share1 text{
+    background:#e33424;
+    margin:0 0.10rem;
+    padding:0 0.06rem;
+    color:#fff;
+    font-size:0.3rem;
+    border-radius:0.10rem;
+}
+.footer1 img{
+    width:0.6rem;
+    height:0.6rem;
+    margin:0 auto;
+}
+.footer{
+    position:fixed;
+    height:1rem;
+    line-height:1rem;
+    background:#ed7101;
+    width:100%;
+    bottom:0;
+    font-size:.28rem;
+    color:#fff;
+    z-index: 999;
+}
+.footer1{
+    width:25%;
+    text-align:center;
+    height:100%;
+    align-items:center;
+    display:flex;
+}
+.footer2{
+    width:25%;
+    text-align:center;
+    color:#fff;
+    height:100%;
+    font-size: 0.32rem;
+}
+.footer3{
+    background:#fff;
+    color:#ed7101;
+    height:100%;
+    text-align:center;
+    border-right:solid 1px #ed7101;
+    width:100%;
+    font-size:0.32rem;
+}
+
+.mask{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:99;
+    overflow:hidden;
+}
+.mask_cont{
+    width:100%;
+    position:absolute;
+    top:30%;
+    z-index:999;
+    overflow:hidden;
+}
+.tishi_cont{
+    width:4.85rem;
+    height:4.70rem;
+    background:#fff;
+    margin:0 auto;
+    border-radius:0.10rem;
+    z-index:999;
+    padding:0.20rem 0;
+    box-shadow:0 0 0.1rem #666;
+}
+.tishi_in{
+    height:78%;
+    padding:0  0.20rem;
+    background:#fff
+}
+.tishi_tltl{
+    text-align:center;
+    line-height:0.8rem;
+}
+.tishi_txt{
+    height:0.78rem;
+    line-height:0.78rem;
+    font-size:.28rem;
+    border-bottom:solid 1px #ed7101;
+}
+.tishi_txt input{
+    width:80%;
+    height: 100%;
+    border:none;
+}
+.map img{
+    width:100%;
+    height:3.4rem;
+}
+.input_before{
+    width:20%;
+}
+.submit_info{
+    height:0.60rem;
+    line-height:0.60rem;
+    font-size:0.32rem;
+    margin-top:0.54rem;
+}
+.tishi_cont img{
+    width:3.2rem;
+    height:3.2rem;
+}
+.mask{
+    display: none;
+}
+</style>
+<div id ="app">
+    <div class="w750">
+        <div class="job">
+            <div class="w710">
+                <div class="job_list flexRowBetween">
+                    <div class="list_left">
+                        <div class="flexRowBetween">
+                            <div class="job_type avoidOverflow font40 color3">{{mainData.title}}</div>
+                            <div class="font38 color">{{mainData.price}}</div>
+                        </div>
+                        <div class="job_address  flexRowBetween">
+                            <div class="address font36 color6">工作地点：高新大都荟</div>
+                            <div class="time font32 color9">{{mainData.create_time}}</div>
+                        </div>
+
+                        <div class="job_company">
+                            <div class="sort">
+                                <div class="company_introuce">
+                                    <div class="company_name flex">
+                                        <div class="sort_items font30 color9">人数:{{mainData.stock}}人
+                                        </div>
+                                        <div class="sort_items font30 color9">年龄:
+                                            {{mainData.age}}
+                                        </div>
+                                        <div class="sort_items font30 color9">性别:
+                                            {{(mainData.gender==1?'男':'女')?'男女不限':''}}
+                           				</div>
+                                    </div>
+                                    <div class="company_name flex">
+                                        <div class="sort_items font30 color9">学历:{{mainData.qualifications}}</div>
+                                        <div class="sort_items font30 color9">经验:
+                                            {{mainData.experience}}
+                                        </div>
+                                    </div>
+                                    <div class="treatment flex font30 color6">
+                                        <div class="treatment_sort" v-for="item in mainData.passage_array">{{item}}</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hongbao">
+                                <img src="images/hongbao.png" />
+                                <div class="hongbao_money">¥300</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt flexRowBetween">
+                    <div class="sumTxt">奖励</div>
+                   
+                </div>
+                <div class="reward_detail font32 line48">
+                    <div>如果您成功入职满一个月，可获得奖金{{mainData.distributionEntry}}元</div>
+                    <div>职位转发微信朋友一次，获得{{mainData.distributionOne}}元， </div>
+                    <div>微信朋友成功入职，您获{{mainData.distributionEntryOne}}元 </div>
+                </div>
+                <div class="share flexRowBetween font34">
+                    <div class="share1 share2">入职·{{mainData.distributionEntry}}元</div>
+                    <div class="share1 share2">转发·{{mainData.distributionOne}}元</div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt">
+                    <div class="sumTxt">职位详情</div>
+                </div>
+                <div class="reward_detail font32 line48 content ql-editor" > 
+                    <div><p class="p1">{{mainData.content}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="w710">
+            <div class="reward">
+                <div class="sum_txt">
+                    <div class="sumTxt">公司简介</div>
+                </div>
+                <div class="reward_detail  font32 line48">
+                    <div><p class="p1">{{merchantData.date}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map">
+            <div id="allmap"></div>
+        </div>
+
+        <div style="height:1.3rem;width:100%;"></div>
+        <div class="footer flexRowBetween font34">
+            <div class="footer1" @click="collect">
+                <img src="images/collect.png"/>
+            </div>
+            <div class="footer1 flex">
+                <a href="tel://merchantData.phone" style="width:0.6rem;height:0.6rem;margin:0 auto;"><img src="images/phone.png"/></a>
+            </div>
+           
+            <div class="footer2"  v-on:click="submit" style="border-left:1px solid #fff">{{checkOrderData.length>0?'已投递':'投递简历'}}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                checkOrderData:[],
+                mainData:[],
+                submitData:{
+                   login_name:'',
+                   password:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                isCollect:false,
+                merchantData:{}
+            }
+
+        },
+        
+        created: function () {
+            var callback = (res)=>{
+                this.productGet();
+                this.wxJsSdk();
+                
+                
+            };
+            window.base.getUserToken(callback);
+            
+        },
+
+        methods:{
+
+        
+
+            productGet(){
+                const self = this;
+                const postData = {
+                    searchItem:{
+                       id:window.base.GetRequest().id,
+                    }
+                };
+                postData.getAfter = {
+                	merchant:{
+                		tableName:'UserInfo',
+                		middleKey:'user_no',
+                		key:'user_no',
+                		searchItem:{
+                			status:1
+                		},
+                		condition:'='
+                	}
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData = res.info.data[0];
+                        self.merchantData = res.info.data[0].merchant[0];
+                        console.log(self.merchantData)
+                        if(window.base.getStorageArray('collectData','id',self.mainData.id)){
+                            self.isCollect = true;
+                        };
+                        console.log(self.isCollect);
+                        self.getDistri();
+                        self.theLocation()
+                    }else{
+                        alert('数据错误')
+                    };
+                   this.checkOrder()
+                };
+                window.base.productGet(postData,callback);
+            },  
+
+          
+
+            wxJsSdk(){
+                const self = this;
+                const postData = {
+                    thirdapp_id:2,
+                    url:window.location.href
+                };
+                const callback = (res)=>{
+            
+                    wx.config({
+                      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                      appId:res.appId, // 必填，公众号的唯一标识
+                      timestamp:res.timestamp , // 必填，生成签名的时间戳
+                      nonceStr:res.nonceStr, // 必填，生成签名的随机串
+                      signature:res.signature,// 必填，签名
+                      jsApiList: ['onMenuShareAppMessage','showAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
+                  });
+
+
+                  wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                      wx.onMenuShareAppMessage({ 
+                          title: self.mainData.title, // 分享标题
+                          desc: self.mainData.content, // 分享描述
+                          link: 'http://www.walhr.com/web/indexDetail.html?id='+self.mainData.id+'&user_no='+localStorage.getItem('user_no'), 
+                          // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                          imgUrl: 'http://www.walhr.com/web/images/login.png', // 分享图标
+                      }, function(res) { 
+                         
+                      });  
+                  });
+
+
+                  wx.error(function(res){
+                   
+                  });
+                };
+                window.base.WxJssdk(postData,callback);
+            },
+
+    
+
+            theLocation(){
+                const self = this;
+                var map = new BMap.Map("allmap");
+                map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
+                map.enableScrollWheelZoom(true);
+                
+                // 用经纬度设置地图中心点
+               
+                if(self.mainData.lng != "" && self.mainData.lat != ""){
+                    map.clearOverlays(); 
+                    var new_point = new BMap.Point(self.mainData.lng,self.mainData.lat);
+                    var marker = new BMap.Marker(new_point);  // 创建标注
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    map.panTo(new_point);      
+                }
+              
+            },
+
+
+            getDistri(){
+                const self = this;
+                console.log(666)
+                if(window.base.GetRequest().user_no){
+                    var postData = {};
+                    postData.token = localStorage.getItem('user_token'),
+                    postData.searchItem = {
+                        child_no:window.base.GetRequest().user_no,
+                        product_id:window.base.GetRequest().id
+                    };
+                    postData.searchItemOr = {
+                        child_no:localStorage.getItem('user_no'),
+                        product_id:window.base.GetRequest().id
+                    };
+                    const callback = (res)=>{
+                        console.log(res)
+                        if(res.info.data.length>0){
+                            for (var i = 0; i < res.info.data.length; i++) {
+                                if(res.info.data[i].child_no==window.base.GetRequest().user_no){
+                                    var p_parentNo = res.info.data[i].parent_no
+                                }
+                                if(res.info.data[i].child_no==localStorage.getItem('user_no')){
+                                    var parent_no = res.info.data[i].parent_no
+                                }
+                            }
+                            if(!parent_no&&p_parentNo){
+                                self.addDistri(p_parentNo)
+                            }
+                        }else{
+                            self.addDistri()
+                        }
+
+                    }
+                    window.base.distriGet(postData,callback); 
+                }
+            },        
+
+
+            addDistri(parent_no){
+                const self = this;
+                var postData = {};
+                postData.token = localStorage.getItem('user_token'),
+                postData.data = {
+                    parent_no:window.base.GetRequest().user_no,
+                    child_no:localStorage.getItem('user_no'),
+                    product_id:window.base.GetRequest().id
+                };
+                postData.saveAfter = [
+
+                    {
+                      tableName:'FlowLog',
+                      FuncName:'add',
+                      data:{
+                        count:self.mainData.distributionOne,
+                        trade_info:'一级转发奖励',
+                        user_no:window.base.GetRequest().user_no,
+                        type:2,
+                        thirdapp_id:2
+                      }
+                    }
+                    
+                ];
+                if(parent_no){
+                    postData.saveAfter.push(
+                        {
+                          tableName:'FlowLog',
+                          FuncName:'add',
+                          data:{
+                            count:self.mainData.distributionTwo,
+                            trade_info:'二级转发奖励',
+                            user_no:parent_no,
+                            type:2,
+                            thirdapp_id:2
+                          }
+                        }
+                    )
+                };
+                
+                const callback = (res)=>{
+                console.log(res)   
+
+                }
+                window.base.distriAdd(postData,callback); 
+            },
+
+
+            collect(){
+                const self = this;  
+                const id = window.base.GetRequest().id;
+                if(self.isCollect){
+                    self.isCollect = !window.base.delStorageArray('collectData',self.mainData,'id');
+                }else{
+                    self.isCollect = window.base.setStorageArray('collectData',self.mainData,'id',999,type='unshift');
+                };
+             	console.log('collect',self.isCollect);
+            },
+
+            userGet(){
+	            const self = this;
+	            const postData = {};
+	            postData.token =localStorage.getItem('user_token');
+	            const callback = (res)=>{
+	              if(res.info.data.length>0){
+	                self.userData = res.info.data[0];
+	              }
+	            };
+	             window.base.userGet(postData,callback);
+	         },
+
+            checkOrder(){
+            	const self = this;
+            	console.log(666)
+            	const postData = {
+            		token:localStorage.getItem('user_token'),
+            		searchItem:{
+            			product_id:window.base.GetRequest().id,
+            			user_no:localStorage.getItem('user_no')
+            		}	
+            	};
+
+            	const callback = (res)=>{
+            		if(res.info.data.length>0){
+            			self.checkOrderData.push.apply(self.checkOrderData,res.info.data);	
+            		}
+            		self.userGet();
+            	};
+            	window.base.orderItemGet(postData,callback);    
+            },
+
+            submit(){
+            	const self = this;
+            	if(self.userData.info.name==''||self.userData.info.address==''||self.userData.info.highEducation==''){
+            		alert('请至个人中心补全简历!');
+            		window.location.href='user.html'; 
+            	}else if(self.checkOrderData.length>0){
+            		alert('请勿重复投递')
+            	}else{
+            		self.addOrder()
+            	}
+            },
+
+
+            addOrder(){
+                const self = this;
+                const postData = {	
+                  token:localStorage.getItem('user_token'),
+                  product:[
+                    {id:window.base.GetRequest().id,count:1}
+                  ],
+                  pay:{balance:0},
+                  type:1,
+                  passage1:self.mainData.user_no
+                };
+                const callback = (res)=>{
+                  if(res&&res.solely_code==100000){
+                  	alert('投递成功！')
+                    setTimeout(function(){
+                        self.buttonClicked=false
+                    },1000);       
+                  }else{
+                    alert('网络故障')
+                    self.buttonClicked = false
+                  } 
+                };
+                window.base.addOrder(postData,callback);    
+            },
+            
+
+             intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
+<script type="text/javascript">
+  function share(){
+    $("#mask1").hide();
+    $("#mask2").toggle();
+  }
+  function sign(){
+    $("#mask2").hide();
+    $("#mask1").toggle();
+  }
+  function hide(){
+    $(".mask").hide();
+  }
+</script>
+</body>
+</html>

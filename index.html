@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>华路卓</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+a{
+    display:block;
+    width:100%;
+}
+.w710{
+    display: none;
+}
+.choose{
+	position:absolute;
+	top:0.92rem;
+	background:#FFF;
+	width:100%;
+	z-index:999;
+    box-shadow: 0 0 0.1rem #fdc593;
+	}
+.btn_submit{
+	height:0.70rem;
+	width:100%;
+	line-height:0.70rem;
+	text-align:center;
+	font-size:0.40rem;
+	color:#fff;
+	background:#ed7101;
+	border-radius:0;
+	border:none;
+}
+.treatment_sort{
+    width:1.6rem;
+}
+.job{
+    height:100%;
+}
+.job_list{
+    margin-top:0.4rem;
+}
+.sort_item{
+	width:25%;
+	text-align:center;
+	color:#666;
+}
+.sort_in{
+	height:0.78rem;
+}
+.sort_in img{
+	width:0.27rem;
+	height:0.16rem;
+	margin-left:0.18rem;
+}
+.choose_item{
+	display:none;
+	width:100%;
+	z-index:999;
+    background: #fff;
+}
+.choose_list{
+	width:100%;
+	height:0.82rem;
+	line-height:0.82rem;
+	text-align:center;
+}
+.choose_this{
+	color:#ed7101;
+}
+.w710{
+	height:2.66rem;
+	border-bottom:solid 1px #d9d9d9;
+	align-items:center;
+	display:flex;
+}
+.w750{
+	background:#fff;
+}
+.index_tab #active{
+    color:#ed7101;
+}
+.sort_in .img2{
+  display: none;}
+#active .img1{
+    display: none;
+}
+ #active .img2{
+    display: block;
+}
+.orgin{
+    width:100%;
+    opacity: 0;
+    height: 0;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .5s ease-out;
+}
+.after{
+    opacity: 1;
+    max-height: 1000px;
+    height: auto;
+/*        max-height: 250px;*/
+    -webkit-animation: slide-down .5s ease-in;
+    transition: max-height .5s ease-in;
+    transform-origin: 50% 0;
+}
+.job_type{
+    height:20%;
+}
+.job_sort{
+    background:#fff;
+    margin-top:0;
+}
+.c_child{
+    width:100%;
+    height:0.6rem;
+    text-align: center;
+}
+</style>
+<div id="app">
+    <div class="w750">
+        <div class="index_tab flexRowBetween"  id="index_tab">
+            <div class="tab_item  font40" :data-id="0" @click="changeMeun" :style="id==0?'color:#ed7101':''">
+                最新岗位
+            </div>
+            <div class="tab_item font40" :data-id="1" @click="changeMeun" :style="id==1?'color:#ed7101':''">
+                附近工作
+            </div>
+        </div>
+        <div id="job">
+            <div class="sort" :style="id==0?'display:block':''">
+                <div id="tab" class="flexRowBetween font36">
+                    <div class="sort_item" :data-num="3"  @click="selectMeun">
+                        <div class="sort_in  flexRowCenter" style="height:100%;" :data-num="3"  @click="selectMeun">
+                            <div class="text1" id="gr_zone_ids" data-id="130100" style="width:80%;text-align: center;" :data-num="3"  @click="selectMeun">区域</div>
+                            <div style="width:20%;" :data-num="3"  @click="selectMeun"> <img src="images/up_icon_a.png" class="img1" :data-num="3"  @click="selectMeun" v-if="num==3"/>
+                            <img src="images/up_icon.png" class="img1" :data-num="3"  @click="selectMeun" v-else/></div>
+                        </div>
+                    </div>
+                    <div class="sort_item tab_this" :data-num="0"  @click="selectMeun">
+                        <div class="sort_in flexRowCenter" :data-num="0"  @click="selectMeun">
+                            <div class="text1" :data-num="0"  @click="selectMeun">薪资</div>
+                            <img src="images/up_icon_a.png" class="img1" :data-num="0"  @click="selectMeun" v-if="num==0"/>
+                            <img src="images/up_icon.png" class="img1" :data-num="0"  @click="selectMeun" v-else/>
+                        </div>
+                    </div>
+                    <div class="sort_item tab_this" :data-num="1"  @click="selectMeun">
+                        <div class="sort_in flexRowCenter" :data-num="1"  @click="selectMeun">
+                            <div class="text1":data-num="1"  @click="selectMeun">经验</div>
+                            
+                            <img src="images/up_icon_a.png" class="img1" :data-num="1"  @click="selectMeun" v-if="num==1"/>
+                            <img src="images/up_icon.png" class="img1" :data-num="1"  @click="selectMeun" v-else/>
+                        </div>
+                    </div>
+                    <div class="sort_item tab_this" :data-num="2"  @click="selectMeun">
+                        <div class="sort_in flexRowCenter" :data-num="2"  @click="selectMeun">
+                            <div class="text1" :data-num="2"  @click="selectMeun">时间</div>
+                            <img src="images/up_icon_a.png" class="img1" :data-num="2"  @click="selectMeun" v-if="num==2"/>
+                            <img src="images/up_icon.png" class="img1" :data-num="2"  @click="selectMeun" v-else/>
+                        </div>
+                    </div>
+                </div>
+                <div class="choose">
+                        <div id="phone_menu" class="choose_item font34" v-for="(item, index) in cityData" :style="num==3?'display:block':''">
+                            <div class="choose_list" :data-show_id="item.id"  @click="toggleMenu"  :style="(show_id==item.id?'background:rgba(254,133,30,0.5)':'')">
+                                {{item.title}}
+                                
+                            </div>
+                            <div class="c_p_child">
+                                <div class="orgin"  :class="(show_id==item.id&&item.child?'after':'')" v-for="(c_item, c_index) in item.child" >
+                                    <div :data-show_child_id="c_item.id"   @click="citySearch" class="c_child font32 color9">
+                                        {{c_item.title}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                </div>
+                <div class="choose" id="choose" >
+                    <div class="choose_item font34" id="tab_cont" :style="num==0?'display:block':''">
+                        <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
+                            不限
+                        </div>
+                        <div class="choose_list" :class="[stringifyOrder=='{price:desc}'?'choose_this':'']" data-order="price:desc" @click="changeSearch">
+                            由高到低
+                        </div>
+                        <div class="choose_list" :class="[stringifyOrder=='{price:asc}'?'choose_this':'']" data-order="price:asc" @click="changeSearch">
+                            由低到高
+                        </div>
+                    </div>
+                    <div class="choose_item font34" id="tab_cont" :style="num==1?'display:block':''">
+                        <template v-for="item in labelData">
+                            <div class="choose_list"  :class="[searchItem.experience=='(item.title)'?'choose_this':'']"  @click="experienceSearch" >
+                                {{item.title}}
+                            </div>
+                        </template >
+                    </div>
+                    <div class="choose_item font34" id="tab_cont" :style="num==2?'display:block':''">
+                         <div class="choose_list" :class="[stringifyOrder=='{}'?'choose_this':'']" data-order="none" @click="changeSearch">
+                            不限
+                            </div>
+                        <div class="choose_list" :class="[stringifyOrder=='{create_time:desc}'?'choose_this':'']" data-order="create_time:desc" @click="changeSearch">
+                            由近到远
+                        </div>
+                        <div class="choose_list" :class="[stringifyOrder=='{create_time:asc}'?'choose_this':'']" data-order="create_time:asc" @click="changeSearch">
+                            由远到近
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="job" id="job_sort" >
+            <div class="w710" v-for="item in mainData">
+                <div class="job_list flexRowBetween"   @click="intoDetail(item.id)">
+                    <div class="list_left" >
+                        <div class="job_type avoidOverflow">{{item.title}}</div>
+                        <div class="treatment flex" >
+                            <div class="treatment_sort"  v-for="c_item in item.passage_array">{{c_item}}</div>
+                        </div>
+                        <div class="job_company flexRowBetween" >
+                            <div class="company_img" >
+                                <img src="images/navbar2-a.png" />
+                            </div>
+                            <div class="company_introuce"  >
+                                <div class="company_name avoidOverflow" >{{item.user[0]?item.user[0].name:''}}</div>
+                                <div class="send_datail flexRowBetween font30">
+                                    <div class="send_tiem">{{item.create_time}}</div>
+                                    <div class="send_need">{{item.address}}|{{item.description}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_right">
+                        <div class="payment">{{item.price}}</div>
+                        <div class="hongbao">
+                            <img src="images/hongbao.png" />
+                           	<div class="hongbao_money">{{item.distributionEntry}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="solely" style="font-size:0.20rem;color:#666;text-align:center;">
+    技术支持:西安纯粹科技有限公司
+</div>
+<div style="height:1.4rem;width:100%;"></div>
+<div class="navbar">
+    <a class="navbar_item" href="index.html">
+        <div class="nav_img">
+            <img src="images/navbar1-a.png">
+        </div>
+        <div class="text this-text">找工作</div>
+    </a>
+    <a class="navbar_item" href="user.html">
+        <div class="nav_img">
+            <img src="images/navbar2.png">
+        </div>
+        <div class="text">个人中心</div>
+    </a>
+    <a class="navbar_item" href="about.html">
+        <div class="nav_img">
+            <img src="images/navbar3.png">
+        </div>
+        <div class="text">了解我们</div>
+    </a>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                cityData:[],
+                labelData:[],
+                mainData:[],
+                passage_array:[],
+              
+                paginate: {
+                    
+                },
+
+                searchItem:{
+                   type:1,
+                   category_id:33,
+                  
+                },
+                show_id:'',
+                show_child_id:'',
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                num:'100000',
+                order:{},
+                id:''
+            }   
+
+        },
+        computed: {
+            // 计算属性的 getter
+            stringifyOrder: function () {
+              return JSON.stringify(this.order).replace(/\"/g,"");
+            }
+        },
+        created: function () {
+            var callback = (res)=>{
+                this.wxJsSdk()
+                
+                this.getLabelData();
+                this.getCityData();
+                
+            };
+            window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+            productGet(isNew){
+                const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+                const postData = {}
+                postData.searchItem =  window.base.cloneForm(self.searchItem);
+                postData.order =  window.base.cloneForm(self.order);
+                postData.getAfter = {
+                    user:{
+                        tableName:'userInfo',
+                        middleKey:'user_no',
+                        key:'user_no',
+                        searchItem:{
+                            status:1
+                        },
+                        condition:'='
+                    },
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData.push.apply(self.mainData,res.info.data);
+                       
+
+                    }else{
+                        alert('没有更多了')
+                    }
+                    console.log(self.passage_array)
+                }
+                window.base.productGet(postData,callback);
+            },  
+
+
+            wxJsSdk(){
+                const self = this;
+                const postData = {
+                    thirdapp_id:2,
+                    url:window.location.href
+                };
+                const callback = (res)=>{
+                    
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId:res.appId, // 必填，公众号的唯一标识
+                        timestamp:res.timestamp , // 必填，生成签名的时间戳
+                        nonceStr:res.nonceStr, // 必填，生成签名的随机串
+                        signature:res.signature,// 必填，签名
+                        jsApiList: ['getLocation'] // 必填，需要使用的JS接口列表
+                    });
+
+
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.getLocation({    
+                            success : function(res) {    
+                                latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90    
+                                longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。    
+                                /* speed = res.speed; // 速度，以米/每秒计     */
+                                accuracy = res.accuracy; // 位置精度    
+                                $("#latitude").val(latitude);
+                                $("#longitude").val(longitude);
+                               
+                                self.latitude = latitude;
+                                self.longitude = longitude;
+                            
+                                self.productGet(); 
+                            },    
+                            cancel : function(res) {    
+                                alert("未能获取地理位置");    
+                            }  
+                        }); 
+                        
+                    });
+
+
+                    wx.error(function(res){
+                        console.log('error',res)
+                    });
+                };
+                window.base.WxJssdk(postData,callback);
+            },
+
+          
+
+            getLabelData(){
+                const self = this;
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.searchItem = {
+                  thirdapp_id:2
+                };
+                postData.getBefore = {
+                  labelData:{
+                    tableName:'label',
+                    searchItem:{
+                      title:['=',['经验筛选']],
+                    },
+                    middleKey:'parentid',
+                    key:'id',
+                    condition:'in',
+                  },
+                };
+                postData.order = {
+                    create_time:'asc'
+                }
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.labelData.push.apply(self.labelData,res.info.data);
+                  }else{
+                    
+                    alert('没有更多了');
+                  };
+                };
+                window.base.labelGet(postData,callback);
+            }, 
+
+
+            getCityData(){
+                const self = this;
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.searchItem = {
+                  type:7,
+                };
+          
+                postData.order = {
+                    create_time:'asc'
+                }
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.cityData.push.apply(self.cityData,res.info.data);
+                  }else{
+                    
+                    alert('没有更多了');
+                  };
+                };
+                window.base.labelGet(postData,callback);
+            },
+
+            toggleMenu: function(e) {
+                var self = this;
+                var dataSet = window.base.getDataSet(e);
+                if(dataSet.show_id){
+                    if(self.show_id==dataSet.show_id){
+                        self.show_id = '';
+                    }else{
+                        self.show_id = dataSet.show_id;
+                    };
+                }else if(dataSet.show_child_id){
+                    if(self.show_child_id==dataSet.show_child_id){
+                        self.show_child_id = '';
+                    }else{
+                        self.show_child_id = dataSet.show_child_id;
+                    };
+                }else{
+                    
+                    self.show_child_id = '';
+                    self.show_id = '';
+                };
+                
+            
+            },
+
+            intoDetail(art_id) {
+                var self = this;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },   
+
+            changeMeun(e){
+                const self = this;
+                var lat = self.latitude;
+                var lon = self.longitude;
+                console.log(e)
+                self.id = e.target.dataset.id
+                if(self.id=='1'){
+                   var orderKey = 'ACOS(SIN(('+ lat +'* 3.1415) / 180 ) *SIN((lat * 3.1415) / 180 ) +COS(('+ lat +' * 3.1415) / 180 ) * COS((lat * 3.1415) / 180 ) *COS(('+ lon +' * 3.1415) / 180 - (lng * 3.1415) / 180 ) ) * 6379';
+                   self.order[orderKey]= orderKey;
+                }else if(self.id=='0'){
+                	self.order = {
+                		create_time:'asc'
+                	}
+                };
+                 console.log('order',self.order);
+                 self.productGet(true)
+            },
+
+
+
+            selectMeun(e){
+                var self = this;
+                console.log(e)
+                self.num =  window.base.getDataSet(e).num;
+                console.log(window.base.getDataSet(e).num)
+            },
+
+            changeSearch(e){
+                const self = this;
+                const order = e.currentTarget.dataset.order;
+                self.order = {};
+                if(order!='none'){
+                    var orderArray = order.split(':');
+                    self.order[orderArray[0]] = orderArray[1]
+                };
+                self.num ='10000';
+                console.log('order',self.order);
+                self.productGet(true);
+            },
+
+            experienceSearch(e){
+                const self = this;
+                const experience = e.target.innerText;
+                console.log(e)
+                self.searchItem.experience = experience;
+                self.num ='10000';
+                self.productGet(true);
+            },
+
+            citySearch(e){
+                const self = this;
+                const address = e.target.innerText;
+                console.log(e)
+                self.searchItem.address = address;
+                self.num ='10000';
+                self.productGet(true);
+            },
+
+
+    } 
+
+});           
+</script>
+
+</body>
+</html>

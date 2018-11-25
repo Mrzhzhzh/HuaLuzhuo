@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>领取电话卡</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #fff;
+}
+div{
+  font-size:.32rem;
+  color:#666;
+}
+.phone_note{
+  margin-top:.32rem;
+  line-height:.42rem;
+}
+.phone_infor{
+  margin-top:.5rem;
+}
+.input_before{
+  width:29%;
+  height:.6rem;
+  line-height:.6rem;
+  overflow:hidden;
+  font-size:.32rem;
+  color:#333; 
+}
+.bank_card{
+  width:100%;
+  margin-top:.42rem;
+}
+.bank_card input{
+  width:71%;
+  padding:0 2%;
+  border:solid 1px #ed7101;
+  height:.6rem;
+  line-height:.6rem;
+  font-size:.32rem;
+  border-radius:.10rem;
+}
+.up_icon{
+  width:.23rem;
+  height:.52rem;
+  float:right;
+}
+.up_icon img{
+  width:.23rem;
+  height:.17rem;
+}
+.adreess_input{
+  width:71%;
+  padding:0 2%;
+  border:solid 1px #ed7101;
+  height:.6rem;
+  line-height:.6rem;
+  border-radius:.10rem;
+}
+.adreess_textarea{
+  width:75%;
+}
+.adreess_textarea textarea{
+  width:96%;
+  height:2.5rem;
+  border:solid 1px #ed7101;
+  border-radius:.10rem;
+  padding:2%;
+  font-size: 0.28rem;
+}
+.input_left{
+  width:1.30rem;
+}
+.confirm_bind{
+  width:100%;
+  height:0.94rem;
+  background:#ed7101;
+  line-height:0.94rem;
+  font-size:.32rem;
+  color:#fff;
+  text-align:center;
+  position:fixed;
+  bottom:0;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+  <div class="p40">
+  <div class="phone_note">限量优惠59元每月！全国流量不限量套餐，电信内购专属！全国流量不限量，包含300分钟通话，超出按0.15元每分钟。填写收件地址后，免费快递送达。</div>
+  <div class="phone_infor" >
+    <div class="">请填写收件信息</div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        收件人姓名:
+      </div>
+      <input placeholder="请输入收件人姓名" v-model='submitData.title'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        身份证号:
+      </div>
+      <input placeholder="请输入身份证号" v-model='submitData.keywords'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        联系电话:
+      </div>
+      <input placeholder="请输入联系电话" v-model='submitData.phone'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        配送地址:
+      </div>
+    </div>
+    <div class="flexRowBetween" >
+      <div class="input_before">
+      </div>
+      <div class="adreess_textarea">
+          <textarea placeholder="请填写详细地址，仅限广东省内收获" v-model='submitData.content'></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="width:100%;height:1.2rem;"></div>
+<div class="confirm_bind"   v-on:click="submit">
+  立即提交免费送货上门
+</div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  title:'',
+                  keywords:'',
+                  phone:'',
+                  content:'',
+                  type:2,
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+    
+        },
+
+        methods:{
+
+
+
+          
+
+          messageAdd(){
+            const self = this;
+            const postData = {};
+            postData.token = localStorage.getItem('user_token');
+            postData.data = {};
+            postData.data = window.base.cloneForm(self.submitData);
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('申请成功')
+              }else{
+                alert('网络故障')
+              }
+              location.reload();
+            };
+            window.base.messageAdd(postData,callback);
+          },
+          
+
+          submit(){
+            const self = this;
+            var phone = self.submitData.phone;
+            const pass = window.base.checkComplete(self.submitData);
+            if(pass){
+              if(phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)){
+                alert('手机格式不正确')
+              }else{
+                self.messageAdd() 
+              }
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

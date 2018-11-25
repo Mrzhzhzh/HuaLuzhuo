@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>充值记录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body  style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #f2f2f2;
+}
+.sum_sort{
+  height:.76rem;
+  align-items:center;
+  width:100%;
+  display:flex;
+  border-bottom:solid 1px #e0e0e0;
+  background: #fff;
+}
+.sort_in{
+  height:.4rem;
+  width:100%;
+}
+.sort_item{
+  width:50%;
+  text-align:center;
+}
+.sum_cont {
+  height:.72rem;
+  line-height:.72rem;
+  background: #fff;
+}
+.p40{
+  background: #fff;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+  <div class="sum flex">
+  <div class="sum_in">
+    <div style="width:100%;text-align:center;">
+      <div style="font-size:.32rem;color:#666;">总支出</div>
+      <div style="font-size:.36rem;color:#ed7101;margin-top:.34rem;">{{computeData.info?computeData.info.FlowLog.countsum:''}}元</div>
+    </div>
+  </div>
+</div>
+<div class="p40">
+  <div class="sum_txt">
+    <div class="sumTxt">支出记录</div>
+  </div>
+  <div class="sum_sort">
+    <div class="sort_in flexRowBetween font36">
+        <div class="sort_item color" style="border-right:solid 1px #e0e0e0;">
+            金额
+        </div>
+        <div class="sort_item color">
+            时间
+        </div>
+    </div>
+  </div>
+   <div class="sum_cont flexRowBetween font34" v-for="item in mainData">
+     <div class="sort_item">
+        {{item.count}}元
+      </div>
+      <div class="sort_item">
+        {{item.create_time}}
+      </div>
+    </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                computeData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+          var callback = (res)=>{
+            this.getMainData();
+            this.getComputeData()
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          const postData = {};
+          postData.paginate = self.paginate;
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            type:'2',
+            count:['<',0]
+          };
+          postData.order = {
+            create_time:'desc',
+          };
+
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.mainData.push.apply(self.mainData,res.info.data);
+            }else{
+              alert('没有更多了','fail')
+            };
+          };
+          window.base.flowLogGet(postData,callback);
+        },
+
+        intoDetail(e) {
+          var self = this;
+          var art_id = window.base.getDataSet(e).id;
+          window.location.href = "./indexDetail.html?id=" + art_id;
+        },
+
+        getComputeData(){
+          const self = this;
+          const postData = {};
+          postData.data = {
+            FlowLog:{
+              compute:{
+                count:'sum',
+              },
+              
+              searchItem:{
+                user_no:localStorage.getItem('merchant_token'),
+                type:2,
+                count:['<',0]
+              }
+            }
+          };
+          const callback = (res)=>{
+           
+              self.computeData = res;
+        
+            console.log(self.computeData)
+          };
+          window.base.flowLogCompute(postData,callback);
+        },
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

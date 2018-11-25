@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>我的简历</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+div{
+  font-size:.32rem;
+  color:#333;
+}
+.circle{
+    font-size:0.36rem;
+    color:#ed7101;
+}
+.w710{
+  height:2.65rem;
+  align-items:center;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+}
+.add img{
+  width:.41rem;
+  height:.41rem;
+  margin-right:.24rem;
+}
+.sum_txt{
+    border:none;
+}
+a{color:#333;}
+</style>
+<div id="app">
+    <div class="w750">
+        <div class="p40">
+            <div class="sum_txt flexRowBetween" style="border:none;">
+                <div class="sumTxt">基础信息</div>
+                <div class="pencil" bindtap="intoPath" data-path="/pages/userResumeBasce/userResumeBasce">
+                    <a href="userResumeBasce.html"><img src="images/pencil.png" />编辑</a>
+                </div>
+            </div>
+            <div class="gig" style="padding-left:.42rem;">
+                <div class="phone_infor">
+                    <div class="bank_card flexRowBetween">
+                        <div class="input_before">
+                            姓名:
+                        </div>
+                        <div class="resume_info">{{mainData.info?mainData.info.name:''}}</div>
+                    </div>
+                    <div class="bank_card flexRowBetween">
+                        <div class="input_before">
+                            性别:
+                        </div>
+                        <div class="resume_info">{{mainData.info?mainData.info.gender==0?'女':'男':''}}</div>
+                    </div>
+                    <div class="bank_card flexRowBetween">
+                        <div class="input_before">
+                            婚姻状况:
+                        </div>
+                        <div class="resume_info">{{mainData.info?mainData.info.married==0?'未婚':'已婚':''}}</div>
+                    </div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        出生年月:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.date:''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        身份证号:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.idCard:''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        最高学历:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.highEducation:''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        工作经验:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.email:''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        目前状态:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.nowStatus==0?'离职':'在职':''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        期望薪资:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.people:''}}</div>
+                </div>
+                <div class="bank_card flexRowBetween">
+                    <div class="input_before">
+                        期望地区:
+                    </div>
+                    <div class="resume_info">{{mainData.info?mainData.info.address:''}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="p40">
+            <div class="sum_txt flexRowBetween">
+                <div class="sumTxt">工作经历</div>
+                <div class="add">
+                    <a href="userResumeExper.html"><img src="images/add.png" /></a>
+                </div>
+            </div>
+            <div class="gig">
+                <div class="education" v-for="(item, index) in workExperience">
+                    <div class="flexRowBetween" style="padding-left:0.1rem;">
+                        <div class="flex">
+                            <div class="circle">●</div>{{item.startDate}}-{{item.endDate}}
+                        </div>
+                        <div class="add">
+                            <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperience"/>
+                        </div>
+                    </div>
+                    <div class="expericence_list">
+                        <div class="expericence">
+                            <div class="exper_company font34 color6"><span>{{item.companyName}}-{{item.job}}</span></div>
+                            <div class="detail font30 color9"><span>{{item.content}}</span></div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p40" style="margin-bottom: 1rem;">
+            <div class="sum_txt flexRowBetween">
+                <div class="sumTxt">教育经历</div>
+                <div class="add">
+                    <a href="userResumeEdu.html"><img src="images/add.png" /></a>
+                </div>
+            </div>
+            <div class="gig">
+                <div class="education" v-for="(item, index) in education">
+                    <div class="flexRowBetween" style="padding-left:0.1rem;">
+                        <div class="flex">
+                            <div class="circle">●</div>{{item.startDate}}-{{item.endDate}}</div>
+                        <div class="add">
+                            <img src="images/minus.png" style="margin-right: 0;" :data-index="index" v-on:click="deleteExperienceEdu"/>
+                        </div>
+                    </div>
+                    <div class="expericence_list">
+                        <div class="expericence">
+                            <div class="exper_company font34 color6"><span>学校：{{item.schoolName}}</span></div>
+                            <div class="exper_company font34 color6"><span>专业：{{item.object}}</span></div>
+                            <div class="exper_company font34 color6"><span>学历：{{item.highEdu}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                workExperience:[],
+                education:[],
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+          var callback = (res)=>{
+            this.userGet();
+         
+          };
+          window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+            userGet(){
+                const self = this;
+                const postData = {
+                    token:localStorage.getItem('user_token'),
+                    thirdapp_id:2
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.mainData = res.info.data[0];
+                        self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[];
+                        self.workExperience = self.mainData.info.workExperience;
+                        self.education = self.mainData.info.education;
+                        console.log(self.education)
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.workExperience)
+                }
+                window.base.userGet(postData,callback);
+            },  
+
+
+            deleteExperience(e){
+                const self = this;
+                var index = window.base.getDataSet(e).index;
+                
+                
+                self.workExperience.splice(parseInt(index),1);
+                
+                const postData ={
+                    data:{
+                        workExperience:self.workExperience
+                    },
+                    token:localStorage.getItem('user_token')
+                };
+                if(!postData.data.workExperience.length>0){
+                    postData.data.workExperience='[]'
+                };
+                const callback = (res)=>{
+                    if(res.solely_code==100000){
+                        alert('删除成功')
+                    }
+                };
+                 window.base.userInfoUpdate(postData,callback);
+            },
+            
+
+            deleteExperienceEdu(e){
+                const self = this;
+                var index = window.base.getDataSet(e,'index');
+                console.log(index)
+                self.education.splice(parseInt(index), 1); 
+                console.log(self.education)
+
+                var postData ={
+                    data:{
+                        education:self.education
+                    },
+                    token:localStorage.getItem('user_token')
+                };
+                if(!postData.data.education.length>0){
+                    postData.data.education='[]'
+                };
+                var callback = (res)=>{
+                    if(res.solely_code==100000){
+                        alert('删除成功')
+                    }
+                };
+                 window.base.userInfoUpdate(postData,callback);
+            }
+
+           
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

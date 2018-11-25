@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>下级</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+.w750{
+  background: #f2f2f2;
+}
+.index_tab{
+  background:#fff;  
+}
+.tab_item{
+  width:33.33%;
+}
+.this_tab{
+  border-bottom:solid 1px #ed7100;
+  color:#ed7100;
+}
+.cash{
+  background:#fff;
+  margin-top:.15rem;
+}
+.p40{
+  padding:0 8%;
+  border-bottom:solid 1px #e0e0e0;
+  width:84%;
+}
+.tlt_item{
+  width:50%;
+}
+.tlt_left{
+  text-align:left;
+}
+.tlt_right{
+  text-align:right;
+}
+.cash_cont{
+  height:.88rem;
+}
+.reward{
+  background:#fff;
+}
+.cash_show{
+  display:none
+}
+.reward .tlt_item{
+  width:33.33%;
+}
+.index_tab .active{
+  color:#ed7100;
+}
+.cash{
+  display: none;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+  <div class="index_tab flexRowBetween">
+    <div class="tab_item"  :data-num='0' :style="num=='0'?'color:#ed7101':''"  @click="menuClick">
+      一级({{numOne}})
+    </div>
+    <div  class="tab_item" :data-num='1' :style="num=='1'?'color:#ed7101':''"  @click="menuClick">
+      二级({{numTwo}})
+    </div>
+     <div  class="tab_item" :data-num='2' :style="num=='2'?'color:#ed7101':''"  @click="menuClick">
+      总推广({{numOne+numTwo}})
+    </div>
+</div>
+  <div class="tab_cont font32" >
+    <div class="cash" :style="num=='0'?'display: block':'display: none'">
+      <div class="p40" v-for="item in mainData">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">{{item.userInfo[0]?item.userInfo[0].nickname:''}}</div>
+          <div class="tlt_item tlt_right">{{item.create_time}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab_cont font32" >
+    <div class="cash" :style="num=='1'?'display: block':'display: none'">
+      <div class="p40" v-for="item in mainDataTwo">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">{{item.userInfo[0]?item.userInfo[0].nickname:''}}</div>
+          <div class="tlt_item tlt_right">{{item.create_time}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <div class="tab_cont font32" >
+    <div class="cash" :style="num=='2'?'display: block':'display: none'">
+      <div class="p40" v-for="item in mainDataThree">
+        <div class="cash_cont flexRowBetween">
+          <div class="tlt_item tlt_left">{{item.userInfo[0]?item.userInfo[0].nickname:''}}</div>
+          <div class="tlt_item tlt_right">{{item.create_time}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>
+</div>
+
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                idData:[],
+                mainData:[],
+                mainDataTwo:[],
+                mainDataThree:[],
+                workExperience:[],
+                education:[],
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                num:0,
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                numOne:'',
+                numTwo:''
+            }
+
+        },
+        
+        created: function () {
+          var callback = (res)=>{
+            this.distriGet();
+
+          };
+          window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+            distriGet(){
+                const self = this;
+                const postData = {
+                	token:localStorage.getItem('user_token'),
+                    searchItem:{
+                    	thirdapp_id:2,
+                    	parent_no:localStorage.getItem('user_no')
+                    }
+                    
+                };
+                postData.getAfter = {
+                	userInfo:{
+                		tableName:'user',
+                		middleKey:'child_no',
+                		key:'user_no',
+                		searchItem:{
+                			status:1
+                		},
+                		condition:'='
+                	}
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                    	self.mainData.push.apply(self.mainData,res.info.data);
+                    	
+                      	for (var i = 0; i < res.info.data.length; i++) {
+                      	  self.idData.push(res.info.data[i].child_no)
+                      	};
+                      	console.log(self.idData)
+                    }else{
+                        alert('数据错误')
+                    }
+                    self.numOne = self.mainData.length;
+                  self.distriGetTwo();
+                }
+                window.base.distriGet(postData,callback);
+            },  
+
+            distriGetTwo(){
+                const self = this;
+                const postData = {
+                	token:localStorage.getItem('user_token'),
+                    searchItem:{
+                    	thirdapp_id:2,
+                    	parent_no:['in',self.idData]
+                    }
+                    
+                };
+                postData.getAfter = {
+                	userInfo:{
+                		tableName:'user',
+                		middleKey:'child_no',
+                		key:'user_no',
+                		searchItem:{
+                			status:1
+                		},
+                		condition:'='
+                	}
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                    	self.mainDataTwo.push.apply(self.mainDataTwo,res.info.data);	
+                    };
+                    self.numTwo = self.mainDataTwo.length;
+                    
+                    self.mainDataThree=self.mainDataTwo.concat(self.mainData);
+                    console.log('self.mainDataThree',self.mainDataThree)
+                    console.log('self.mainDataTwo',self.mainDataTwo)
+                    console.log('self.mainData',self.mainData)
+                }
+                window.base.distriGet(postData,callback);
+            }, 
+
+            menuClick(e){
+            	const  self = this;
+            	self.num='';
+            	self.num = window.base.getDataSet(e).num;
+            	console.log(self.num)
+            },
+
+
+
+
+
+           
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

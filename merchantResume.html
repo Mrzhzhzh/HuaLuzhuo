@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>收到简历</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #f2f2f2;
+}
+.w710{
+  height:2.55rem;
+  border-bottom:solid 1px #d9d9d9;
+  align-items:center;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+}
+.job_list{
+  height:1.65rem;
+  width:100%;
+  align-content: space-between;
+}
+.list_left{
+  width:60%;
+  height:1.80rem;
+
+}
+.list_right{
+  width:20%;
+  height:1.80rem;
+  text-align:right;
+  color:#666;
+}
+.job_type{
+  height:33%;
+  color:#333;
+  display:flex;
+  align-items:center;
+  margin-right:.20rem;
+}
+.treatment{
+  height:33%;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+.treatment_sort{
+  margin-right:.05rem;
+  width:auto;
+  background: #fff;
+}
+.treatment_sort img{
+  width:.22rem;
+  height:.22rem;
+  margin-right.:0.3rem;
+}
+.company_img{
+  width:16%;
+  height:100%;
+  align-items:center;
+  display:flex;
+}
+.company_img img{
+  width:.6rem;
+  height:.6rem;
+}
+.company_introuce{
+  height:33%;
+  color:#666;
+  width:100%;
+  display:flex;
+  align-items:center;
+
+}
+.company_name{
+  height:50%;
+  font-size:.32rem;
+  color:#333;
+}
+.send_datail{
+  width:60%;
+}
+.send_tiem{
+  font-size:.26rem;
+  color:#999;
+}
+.send_need{
+  font-size:.26rem;
+  color:#666;
+}
+.payment{
+  height:50%;
+  font-size:.32rem;
+  color:#666;
+}
+.hongbao{
+  height:50%;
+
+}
+.hongbao img{
+  width:.7rem;
+  height:.82rem;
+}
+
+.handle1{
+  width:50%;
+  display:flex;
+  text-align:center;
+  height:100%;
+  background:#ed7101;
+  color:#fff;
+  align-items:center;
+}
+.handle2{
+  width:25%;
+  display:flex;
+  text-align:center;
+  height:100%;
+  text-align:center;
+  height:100%;
+  background:#0ea884; 
+  color:#fff;
+}
+.handle_in{
+  width:100%;
+  margin:0 auto;
+  color:#fff;
+}
+.resume_handle{
+  height:0.8rem;
+  margin-bottom:.20rem;
+}
+.resume_handle img{
+  width:.47rem;
+  height:.47rem;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+  <div class="job" v-for="(item,index) in mainData">
+    <div class="w710" >
+       <a class="job_list flexRowBetween" @click="intoDetail(item.user_no)">
+        <div class="list_img">
+          <div class="user_img">
+              <img  class="user_img" :src="item.user[0].headImgUrl" />
+          </div>
+        </div>
+        <div class="list_left">
+          <div class="flex">
+            <div class="job_type avoidOverflow">{{item.userInfo[0].name}}</div>
+            
+          </div>
+          <div class="treatment flex">
+            <div class="treatment_sort"><img src="images/resume1.png">{{item.userInfo[0].address}}</div>
+            <div class="treatment_sort"><img src="images/resume2.png">{{item.userInfo[0].gender==1?'男':'女'}}</div>
+            <div class="treatment_sort"><img src="images/resume3.png">{{item.userInfo[0].highEducation}}</div>
+            <div class="treatment_sort"><img src="images/resume4.png">{{item.userInfo[0].email}}</div>
+            
+          </div>
+          <div class="company_introuce avoidOverflow font36">
+          应聘职位:{{item.products[0].snap_product.description}}
+          </div>
+        </div>  
+        <div class="list_right font34">
+          <view style="width:100%;height:33%;overflow: hidden;">
+         {{item.create_time}}
+       </view>
+        </div>
+      </a>
+    </div>
+    <div class="resume_handle font34 flexRowBetween">
+      <div class="handle1">
+        <div class="handle_in flexRowaround">
+          <img src="images/resume6.png">
+          <div style="color:#fff;">{{item.userInfo[0].phone}}</div>
+        </div>
+      </div>
+      <div class="handle2" style="margin:0. 1rem;width:32%;" >
+        <div class="handle_in flexRowaround">
+          <img src="images/resume7.png">
+
+	        <div style="color:#fff;width:100%;height:100%;line-height:40px" v-if="item.order_step=='0'"  @click="orderUpdate(index)">邀请面试</div>
+	        <div style="color:#fff;width:100%;height:100%;line-height:40px" v-if="item.order_step=='1'">已通知面试</div>
+		    <div style="color:#fff;width:100%;height:100%;line-height:40px" v-if="item.order_step=='2'"  @click="orderUpdateTwo(index)">邀请入职</div>
+		    <div style="color:#fff;width:100%;height:100%;line-height:40px" v-if="item.order_step=='3'" >已被拒绝</div>
+		    <div style="color:#fff;width:100%;height:100%;line-height:40px" v-if="item.order_step=='4'" >已入职</div>
+        </div>
+      </div>
+      <div class="handle2" style="width:18%;" @click="orderDelete" :data-id='item.id'>
+        <div class="handle_in flexRowaround">
+          <img src="images/resume8.png">
+	          <div style="color:#fff;">删除</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                distributionData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+          var callback = (res)=>{
+            this.getMainData();
+            this.productGet();
+
+            
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+        getMainData(isNew){
+          const self = this;
+          if(isNew){
+              self.mainData = [];
+              self.paginate = {
+                  count: 0,
+                  currentPage: 1,
+                  pagesize: 6,
+                  is_page: true,
+              }
+          };
+          const postData = {};
+          postData.paginate = window.base.cloneForm(self.paginate);
+          postData.token = localStorage.getItem('merchant_token');
+           postData.searchItem = {
+              user_type:['in',[0]],
+              order_step:['in',[0,1,2,3,4]]
+           }
+          postData.getBefore={
+            order:{
+              tableName:'OrderItem',
+              searchItem:{
+                product_id:['in',[window.base.GetRequest().id]]
+              },
+              fixSearchItem:{
+                status:1
+              },
+              middleKey:'order_no',
+              key:'order_no',
+              condition:'in',
+            } 
+          };
+          postData.getAfter={
+            userInfo:{
+              tableName:'UserInfo',
+              middleKey:'user_no',
+              key:'user_no',
+              condition:'=',
+              searchItem:{
+                status:['in',[1]]
+              },
+            },
+            user:{
+              tableName:'user',
+              middleKey:'user_no',
+              key:'user_no',
+              condition:'=',
+              searchItem:{
+                status:['in',[1]]
+              },
+            } 
+          }; 
+        
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.mainData.push.apply(self.mainData,res.info.data);
+            }else{
+              alert('没有更多了')
+            };
+            
+            this.getDistri();
+          };
+          window.base.orderGet(postData,callback);
+        },
+
+        intoDetail(e) {
+          var self = this;
+          var user_no = window.base.getDataSet(e).user_no;
+          window.location.href = "./merchentResumeDetail.html?id=" + user_no;
+        },   
+
+        orderUpdate(index){
+          const self = this;
+          console.log(index);
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          
+          postData.searchItem = {
+            user_type:0,
+            id:self.mainData[index].id
+          };
+      		postData.data = {
+      			passage1:localStorage.getItem('user_no'),
+          		order_step:1
+          	}
+          console.log('orderUpdate',postData)
+          const callback  = (res)=>{
+          	if(res.solely_code==100000){
+          		alert('更新状态成功')
+          	}else{
+          		alert('网络故障')
+          	} 
+          	
+  
+          };
+          window.base.orderUpdate(postData,callback);
+        },
+
+        orderUpdateTwo(index){
+          const self = this;
+          console.log(index);
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          
+          postData.searchItem = {
+            user_type:0,
+            id:self.mainData[index].id
+          };
+  
+       
+          postData.data = {
+          	passage1:localStorage.getItem('user_no'),
+          	order_step:4
+          }
+        
+          console.log('orderUpdate',postData)
+          const callback  = (res)=>{
+          	if(res.solely_code==100000){
+          		alert('更新状态成功')
+          	}else{
+          		alert('网络故障')
+          	} 
+          	
+          	self.userInfoUpdate();
+          };
+          window.base.orderUpdate(postData,callback);
+        },
+
+
+
+
+
+        getDistri(){
+          const self = this;
+          
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            child_no:self.mainData[0].user_no,
+            product_id:window.base.GetRequest().id
+          }
+          postData.getAfter = {
+            distri:{
+              tableName:'Distribution',
+              middleKey:'parent_no',
+              key:'child_no',
+              searchItem:{
+                status:1,
+                product_id:window.base.GetRequest().id
+              },
+              condition:'='
+            }
+          };
+          const callback = (res)=>{
+            self.distributionData = res;
+
+          };
+          window.base.distriGet(postData,callback);
+        },  
+
+        userInfoUpdate(){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token'); 
+          postData.data = {
+            update_time:new Date().getTime(),
+          };
+          postData.saveAfter=[];
+          postData.saveAfter.push(
+            {
+              tableName:'FlowLog',
+              FuncName:'add',
+              data:{
+                count:self.productData.distributionEntry,
+                trade_info:'入职奖励',
+                user_no:self.mainData[0].user_no,
+                type:2,
+                thirdapp_id:2
+              }  
+            },       
+          );
+          console.log('userInfoUpdate',postData);
+          console.log('userInfoUpdate',self.distributionData);
+          if(self.distributionData.info.data.length>0){
+
+            postData.saveAfter.push(
+              {
+                tableName:'FlowLog',
+                FuncName:'add',
+                data:{
+                  count:self.productData.distributionEntryOne,
+                  trade_info:'下级入职奖励',
+                  user_no:self.distributionData.info.data[0].parent_no,
+                  type:2,
+                  thirdapp_id:2
+                }  
+              },       
+            );
+
+            if(self.distributionData.info.data[0].distri){
+              postData.saveAfter.push(
+                {
+                  tableName:'FlowLog',
+                  FuncName:'add',
+                  data:{
+                    count:self.productData.distributionEntryTwo,
+                    trade_info:'下级入职奖励',
+                    user_no:self.distributionData.info.data[0].distri[0].parent_no,
+                    type:2,
+                    thirdapp_id:2
+                  }  
+                },
+              )
+            };
+            
+          };
+          console.log('distributionData',postData);
+          const callback = (res)=>{
+            console.log('userInfoUpdate',res);
+            self.getMainData(true);
+          };
+          window.base.userInfoUpdate(postData,callback); 
+        },
+
+
+
+        productGet(){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            id:window.base.GetRequest().id
+          }
+
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              self.productData = res.info.data[0]
+            }
+          };
+          window.base.productGet(postData,callback);
+        }, 
+
+        orderDelete(e){
+          const self = this;
+          const postData = {};
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            user_type:0,
+            id:window.base.getDataSet(e).id
+          };
+          
+          const callback  = res=>{
+            alert('已删除');
+            self.getMainData(true);
+          };
+          window.base.orderDelete(postData,callback);
+        },
+
+
+
+        
+           
+        }
+    });            
+</script>
+</body>
+</html>

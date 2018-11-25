@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>工作经历</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+div{
+  font-size:.26rem;
+  color:#333;
+}
+.w710{
+  height:1.55rem;
+  align-items:center;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+}
+.sumTxt{
+  height:.42rem;
+  padding-left:.24rem;
+  font-size:.32rem;
+  color:#333;
+  font-weight:bold;
+  border-left:solid 3px #ed7101;
+}
+.sum_txt{
+  height:0.94rem;
+  align-items:center;
+  width:100%;
+  display:flex;
+  border:none;
+}
+.gig{
+  border:solid 1px #e0e0e0;
+  border-radius:.10rem;
+  position:relative;
+  padding:.24rem;
+}
+.education{
+  padding.:0rem .42rem;
+  position:relative;
+}
+.education .add{
+  position:absolute;
+  top:.15rem;
+  right:0;
+}
+.gig text{
+  color:#ed7101;
+  font-size:.34rem;
+  margin-right:.26rem;
+}
+.expericence{
+  border-left:dashed 1px #e0e0e0;
+  padding-left:.24rem;
+  padding-bottom:.24rem;
+  margin-left:.16rem;
+}
+
+.phone_note{
+  margin-top:.32rem;
+  line-height:.42rem;
+}
+.phone_infor{
+  margin-top:.24rem;
+}
+.input_before{
+  width:24%;
+  height:.9rem;
+  line-height:.9rem;
+  overflow:hidden;
+  color:#333; 
+}
+.bank_card .resume_info{
+  width:72%;
+  padding:0 2%;
+  height:.9rem;
+  line-height:.9rem;
+  font-size:.32rem;
+}
+.pencil{
+  width:23%;
+  text-align:right;
+}
+.pencil img{
+  width:.3rem;
+  height:.3rem;
+  margin-right:.24rem;
+}
+.input_before text{
+  color:#ff0000;
+}
+.input_note{
+  color:#ff0000;
+}
+.resume_info input{
+  width:96%;
+  padding:0 2%;
+  text-align:right;
+  border:none;
+  background: #fff;
+}
+
+.btn{
+  margin-top:.42rem;
+}
+.btn button{
+  width:2rem;
+  height:.62rem;
+  border-radius:.10rem;
+  background:#ccc;
+  line-height:.62rem;
+  text-align:center;
+  font-size:.32rem;
+  color:#fff;
+  border:none;
+}
+.save{
+  background:#ed7101;
+}
+.job_des textarea{
+  width:95%;
+  height:2rem;
+  border:solid 1px #e0e0e0;
+  border-radius:.10rem;
+  overflow:scroll;
+  padding:2.5%;
+  font-size:0.26rem;
+  color:#666;
+  
+}
+a{color:#fff;}
+</style>
+<div id='app'>
+  <div class="w750">
+      <div class="p40">
+          <div class="sum_txt flexRowBetween">
+              <div class="sumTxt">工作经验</div>
+          </div>
+          <div class="p40 gig">
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      公司名称:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="请输入公司名称" v-model='submitData.companyName'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      开始时间:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="开始时间" v-model='submitData.startDate'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      结束时间:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="结束时间" v-model='submitData.endDate'></input>
+                  </div>
+              </div>
+              <div class="bank_card flexRowBetween">
+                  <div class="input_note">*</div>
+                  <div class="input_before">
+                      职位名称:
+                  </div>
+                  <div class="resume_info">
+                      <input placeholder="职位名称" v-model='submitData.job'></input>
+                  </div>
+              </div>
+              <div style="height:0.94rem;line-height:0.94rem;color:#666;font-size:.32rem;">工作描述:</div>
+              <div class="job_des">
+                  <textarea placeholder="请输入工作描述,不少于20个字" style="color:#666;" v-model='submitData.content'>
+                  </textarea>
+              </div>
+          </div>
+          <div class="btn flexRowBetween">
+            <button bindtap="setValue">取消</button>
+            <button class="save" style="background:#ed7101;" v-on:click="submit">保存</button>
+          </div>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                workExperience:[],
+                submitData:{
+                  companyName:'',
+                  startDate:'',
+                  endDate:'',
+                  job:'',
+                  content:''
+                },
+              
+                
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+            var callback = (res)=>{
+              //this.getComputeData();
+              this.userGet();
+            };
+            window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+          userGet(){
+
+            const self = this;
+            const postData = {};
+            postData.token = localStorage.getItem('user_token');
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData = res.info.data[0].info;
+                self.mainData.workExperience = self.mainData.workExperience?self.mainData.workExperience:[]
+              }
+            };
+            window.base.userGet(postData,callback);
+
+          },
+
+
+
+
+
+
+          userInfoUpdate(){
+            const self = this;
+            const postData = {};
+            postData.token =localStorage.getItem('user_token');
+            postData.data = {};
+            console.log('workExperience',self.submitData);
+            self.mainData.workExperience.push(self.submitData);
+            postData.data.workExperience = self.mainData.workExperience;
+            
+            const callback = (data)=>{
+              if(data.solely_code==100000){
+                alert('完善成功')
+                setTimeout(function(){
+                  window.location.href = "./userResume.html";
+                },300); 
+              }else{
+                alert('网络故障')
+              };
+            };
+             window.base.userInfoUpdate(postData,callback);
+          },
+          
+
+          
+
+          submit(){
+            const self = this;
+            var phone = self.submitData.phone;
+            const pass = window.base.checkComplete(self.submitData);
+            
+            if(pass){    
+                self.userInfoUpdate();       
+            }else{
+              alert('请补全信息');
+            };
+          },  
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

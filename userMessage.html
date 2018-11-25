@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>消息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+.about_img{
+  width:95%;
+  display:flex;
+  align-items:center;
+  background:#fff;
+  margin-bottom:.22rem;
+  padding:.24rem 2.5%;
+}
+.deatil{
+  font-size:.3rem;
+  color:#999;
+  line-height:.42rem;
+}
+a{color:#fff;cursor: pointer;}
+</style>
+<div id="app">
+<div class="w750">
+   <div class="w710">
+    <div class="about_img" v-for="item in mainData">
+      <div style="width:100%;">
+       <div style="height:.52rem;line-height:.52rem;border-left:solid 4px #ed7100;font-size:.32rem;color:#444;padding-left:.14rem;margin-bottom: 0.2rem">{{item.title}}</div>
+        <div class="deatil">{{item.description}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+        
+                mainData:[],
+          
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                  thirdapp_id:2
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+            
+            console.log(window.base.GetRequest().title)
+
+            var callback = (res)=>{
+
+                this.getMainData();
+     
+            };
+            window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+
+
+
+
+            getMainData(isNew){
+                const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.searchItem = window.base.cloneForm(self.searchItem)
+                postData.order = {
+                  create_time:'desc',
+                };
+                postData.getBefore = {
+				  article:{
+				    tableName:'label',
+				    searchItem:{
+				      title:['=',[window.base.GetRequest().title]],
+				    },
+				    middleKey:'menu_id',
+				    key:'id',
+				    condition:'in',
+				  },
+				};
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.mainData.push.apply(self.mainData,res.info.data);
+                  }else{
+                  
+                    alert('没有更多了');
+                  };
+                };
+                window.base.articleGet(postData,callback);
+            },
+
+   
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

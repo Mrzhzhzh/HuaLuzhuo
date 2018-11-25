@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>账户信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+.w750{
+    background: #f2f2f2;
+}
+.user_left{
+  display: block;
+}
+.user_sort{
+    height:0.99rem;
+    display:flex;
+    align-items:center;
+    width:100%;
+    background:#fff;
+}
+.user_item{
+    height:.64rem;
+    width:33.33%;
+    text-align:center;
+}
+.item_top{
+    height:50%;
+    font-size:.26rem;
+    color:#ed7101;
+}
+.item_bottom{
+    height:50%;
+    color:#ed7101;
+}
+.vertical_line{
+    width:2%;
+    height:70%;
+}
+.index_tab{
+    background:#fff;    
+}
+.tab_item{
+    width:50%;
+    font-size:0.28rem;
+}
+.this_tab{
+    border-bottom:solid 1px #ed7100;
+    color:#ed7100;
+}
+.sort{
+    height:.72rem;
+    border:solid 1px #d9d9d9;
+}
+.sort_item{
+    width:25%;
+    text-align:center;
+    font-size:.28rem;
+    color:#666;
+}
+.sort_in{
+    width:38%;
+    margin:0 auto;
+    height:.72rem;
+}
+.sort_in img{
+    width:.22rem;
+    height:.1.65rem;
+}
+.cash_tlt{
+    height:.69rem;
+    border-bottom:solid 1px #e0e0e0;
+    color:#ed7100;
+}
+.index_tab .active{
+  border-bottom:solid 2px #ed7100;
+}
+.cash{
+    background:#fff;
+    margin-top:.12rem;
+    padding-bottom:.22rem;
+    display: none;
+}
+.tlt_item{
+    text-align:center;
+    width:50%;
+}
+.cash_cont{
+    height:.89rem;
+}
+.reward{
+    background:#fff;
+    margin-top:.22rem;
+    padding-bottom:.22rem;
+}
+.cash_show{
+    display:none
+}
+.reward .tlt_item{
+    width:33.33%;
+}
+.cash_tlt{
+  height:0.94rem;
+}
+.user_sort {
+  margin-bottom: 0.14rem;
+}
+</style>
+<div id="app">
+<div class="w750">
+    <div class="banner">
+        <div class="p40">
+            <div class="banner_top" style="margin-top: 0.14rem;">
+                <a href="userMessage.html?title=用户消息"><img src="images/tixing.png"/></a>
+            </div>
+            <div class="banner_bottom flexRowBetween">
+                <div class="user_left">
+                    <div style="font-size:.38rem;color:#fff;width:100%;height:60%;">
+                       {{userData.nickname}}
+                    </div>
+                    <div class="flex">
+                      <a class="flex" style="width:60%;height:40%;" href="userCashCard.html">
+                          <div class="flex" style="margin-right:.34rem;">
+                              <div class="user_card" style="margin-right:.14rem;"><img src="images/accout1.png" /></div>
+                              <div class="font32 color1">绑定银行卡</div>
+                          </div>  
+                      </a>
+                      <div class="font34 color1" style="width:40%;"><a href="userCashNow.html">提现 >> </a></div>
+                    </div>
+                </div>
+                <div class="user_right">
+                    <div class="user_img">
+                        <img class="user_img" :src="userData.headImgUrl" />
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user_sort font34 color">
+        <div class="user_item  flexRowBetween">
+            <div style="width:98%;">
+                <div class="item_top">已提现</div>
+                <div class="item_bottom">{{computeData?computeData:''}}.00</div>
+            </div>
+            <div class="vertical_line">
+                <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+            </div>
+        </div>
+        <div class="user_item flexRowBetween">
+            <div style="width:98%;">
+                <div class="item_top">余额</div>
+                <div class="item_bottom">{{userData.info?userData.info.balance:''}}</div>
+            </div>
+            <div class="vertical_line">
+                <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
+            </div>
+        </div>
+        <div class="user_item">
+            <a href="userCashNext.html" class="item_bottom" style="height:.69rem;line-height:.69rem;">下级</a>
+        </div>
+    </div>
+    <div class="index_tab  flexRowBetween">
+        <div class="tab_item" :data-num='0'  :style="num=='0'?'color:#ed7101':''" 
+        @click="buttonClicked?'':menuClick($event)">
+            提现记录
+        </div>
+        <div class="tab_item" :data-num='1'  @click="buttonClicked?'':menuClick($event)" :style="num=='1'?'color:#ed7101':''">
+            奖励记录
+        </div>
+    </div>
+
+
+        <div class="cash" :style="num=='0'?'display: block':'display: none'">
+            <div class="p40 font32">
+                <div class="cash_tlt flexRowBetween font34">
+                    <div class="tlt_item">
+                        金额
+                    </div>
+                    <div class="tlt_item">
+                        时间
+                    </div>
+                </div>
+                <div class="cash_cont flexRowBetween" v-for="item in mainData">
+                    <div class="tlt_item">{{item.count}}元</div>
+                    <div class="tlt_item">{{item.create_time}}<span v-if="item.status==0" class="color">(审核中)</span></div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="cash font34" :style="num=='1'?'display: block':'display: none'">
+            <div class="p40  font32" >
+                <div class="cash_tlt flexRowBetween">
+                    <div class="tlt_item">
+                        金额
+                    </div>
+                    <div class="tlt_item">
+                        原因
+                    </div>
+                    <div class="tlt_item">
+                        时间
+                    </div>
+                </div>
+                <div class="cash_cont flexRowBetween" v-for="item in mainData">
+                    <div class="tlt_item">{{item.count}}元</div>
+                    <div class="tlt_item">{{item.trade_info}}</div>
+                    <div class="tlt_item">{{item.create_time}}</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                userData:[],
+                mainData:[],
+                computeData:[],
+                num:0,
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+           
+                  count:['<','0'],
+                 
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                buttonClicked:false
+            }
+
+        },
+        
+        created: function () {
+            
+            
+
+            var callback = (res)=>{
+                this.userGet();
+                this.getMainData();
+                this.getComputeData();
+            };
+            window.base.getUserToken(callback);
+        },
+
+        methods:{
+
+
+
+            userGet(){
+                const self = this;
+                const postData = {
+                    token:localStorage.getItem('user_token'),
+                    thirdapp_id:2
+                };
+                const callback = (res)=>{
+                    if(res.info.data.length>0){
+                        self.userData = res.info.data[0]
+                    }else{
+                        alert('数据错误')
+                    }
+                    console.log(self.mainData)
+                }
+                window.base.userGet(postData,callback);
+            },  
+
+            getMainData(isNew){
+                const self = this;
+                if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
+                const postData = {};
+                postData.paginate = window.base.cloneForm(self.paginate);
+                postData.token = localStorage.getItem('user_token');
+                postData.searchItem = window.base.cloneForm(self.searchItem);
+                postData.searchItem.type=2;
+                postData.searchItem.status=['in',[0,1]];
+                postData.order = {
+                  create_time:'desc',
+                };
+                const callback = (res)=>{
+                  if(res.info.data.length>0){
+                    self.mainData.push.apply(self.mainData,res.info.data);
+                  }else{
+                  
+                    alert('没有更多了');
+                  };
+                  self.buttonClicked=false;
+                };
+                window.base.flowLogGet(postData,callback);
+            },
+
+            getComputeData(){
+              const self = this;
+              const postData = {};
+              postData.data = {
+                FlowLog:{
+                  compute:{
+                    count:'sum',
+                  },
+                  
+                  searchItem:{
+                    user_no:localStorage.getItem('user_no'),
+                    type:2,
+                    count:['<',0],
+                    status:['in',[0,1]]
+                  }
+                }
+              };
+              const callback = (res)=>{
+                
+                  self.computeData = -res.info.FlowLog.countsum;
+              
+                console.log(self.computeData)
+              };
+              window.base.flowLogCompute(postData,callback);
+            },
+
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./indexDetail.html?id=" + art_id;
+            },  
+
+			menuClick(e) {
+			    const self = this;
+			    console.log(e)
+			    
+			    self.buttonClicked = true;
+			    self.num  = e.target.dataset.num;
+			    
+			    self.changeSearch(self.num);
+			  },
+
+			changeSearch(num){
+			    const self = this;
+			    self.searchItem = {};
+			    if(num=='0'){
+			    	self.searchItem.count = ['<',0]
+			    }else if(num=='1'){
+			      self.searchItem.count = ['>=',0]
+			    };
+			    self.getMainData(true);
+			  }, 
+
+           
+        }
+    });            
+</script>
+
+</body>
+</html>

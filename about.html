@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>关于我们</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body style="background: #fff;">
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+.about_img{
+  width:100%;
+  height:3rem;
+  overflow:hidden;
+  position:relative;
+  left:0;
+}
+.about_img img{
+  width:100%;
+  height:2.7rem;
+  margin-top: 0.2rem;
+}
+
+</style>
+<div id="app">
+  <div class="w750">
+     <div class="w710 font40">
+      <div class="about_img" v-for="item in mainData">
+        <img :src="item.mainImg[0].url" :data-id="item.id"  @click="intoDetail">
+        <div style="position:absolute;top:42%;width:100%;">
+          <div  style="color:#fff;text-align:center;" :data-id="item.id"  @click="intoDetail">
+            {{item.title}}>>
+          </div>
+        </div>
+      </div>
+
+
+    <div style="height:1.4rem;width:100%;"></div>
+    <div class="navbar">
+        <a class="navbar_item" href="index.html">
+            <div class="nav_img">
+              <img src="images/navbar1.png">
+            </div>
+            <div class="text">找工作</div>
+        </a>
+        <a class="navbar_item" href="user.html">
+            <div class="nav_img">
+               <img src="images/navbar2.png">
+            </div>
+            <div class="text ">个人中心</div>
+        </a>
+        <a class="navbar_item" href="about.html">
+            <div class="nav_img">
+                <img src="images/navbar3-a.png">
+            </div>
+            <div class="text  this-text">了解我们</div>
+        </a>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+               
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+               
+            }
+
+        },
+        
+        created: function () {
+
+            this.getMainData()
+        },
+
+        methods:{
+
+          getMainData(){
+            const self = this;
+            const postData = {};
+            postData.paginate = window.base.cloneForm(self.paginate);
+            postData.searchItem = {
+              thirdapp_id:2
+            };
+            postData.getBefore = {
+              mainData:{
+                tableName:'label',
+                searchItem:{
+                  title:['=',['了解我们']],
+                },
+                middleKey:'menu_id',
+                key:'id',
+                condition:'in',
+              },
+            };
+            const callback = (res)=>{
+              if(res.info.data.length>0){
+                self.mainData.push.apply(self.mainData,res.info.data);
+              }else{
+                
+                alert('没有更多了');
+              };
+            };
+            window.base.articleGet(postData,callback);
+          },
+
+          intoDetail(e) {
+            var self = this;
+            var art_id = window.base.getDataSet(e).id;
+            window.location.href = "./aboutHelp.html?id=" + art_id;
+          },   
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

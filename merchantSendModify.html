@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>修改发布信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="js/jquery1.8.3.js"></script>
+</head>
+<body>
+<style>
+.choose_item{
+  width:29.8%;
+  height:.82rem;
+  text-align:center;
+  line-height:.82rem;
+  font-size:.3rem;
+  border:solid 1px #e0e0e0;
+  border-radius:.10rem;
+  margin-top:.32rem;
+}
+#choose{
+  flex-wrap: wrap;
+}
+.choosed{
+  color:rgb(237, 113, 1);
+  border:solid 1px rgb(237, 113, 1);
+}
+.reward_sort{
+  height:0.8rem;
+  border-bottom:solid 1px #e0e0e0;
+  font-size:.3rem;
+  color:#666;
+  width:50%;
+  line-height:0.8rem;
+}
+.reward_money{
+  flex-wrap:wrap;
+}
+</style>
+<div id="app">
+<div class="w750">
+ <div class="p40">
+  <div class="sum_txt flexRowBetween">
+    <div class="sumTxt">基础信息</div>
+  </div>
+  <div class="phone_infor" >
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        标题:
+      </div>
+      <input v-model='submitData.title'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        薪酬:
+      </div>
+      <input  v-model='submitData.price'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        职位:
+      </div>
+      <input v-model='submitData.description'></input>
+    </div>
+   </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        人数:
+      </div>
+      <input  v-model='submitData.stock'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        学历:
+      </div>
+      <input v-model='submitData.qualifications'></input>
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        经验:
+      </div>
+       ‍‍<select id="pid"  data-key="experience" @change="selectChange" style="width:2rem;height:0.72rem;" > 
+          <option >请选择</a> 
+          <option v-for="item in labelData">{{item.title}}</option> 
+        
+      </select> 
+    </div>
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        年龄:
+      </div>
+      <input  v-model='submitData.age'></input>
+    </div>
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        转发:
+      </div>
+      <input  v-model='submitData.distributionOne'></input>
+    </div>  
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        二级转发:
+      </div>
+      <input  v-model='submitData.distributionTwo'></input>
+    </div>  
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职:
+      </div>
+      <input  v-model='submitData.distributionEntry'></input>
+    </div>    
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职一级:
+      </div>
+      <input  v-model='submitData.distributionEntryOne'></input>
+    </div>    
+
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        入职二级:
+      </div>
+      <input  v-model='submitData.distributionEntryTwo'></input>
+    </div>
+   
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        性别:
+      </div>
+      ‍‍<select id="pid"   v-model='submitData.gender' style="width:2rem;height:0.72rem;"> 
+          <option label="请选择":value='3'></a> 
+          <option label="男女不限" :value='2'></a> 
+          <option label="男" :value='1'></a> 
+          <option label="女" :value='0'></a> 
+      </select> 
+    </div>
+    <div class="bank_card flexRowBetween" >
+      <div class="input_before" style="width: 37%">
+        工作地点:
+      </div>
+       ‍‍<select id="pid"   style="width:3rem;height:0.72rem;" > 
+          <option >请选择省</a> 
+          <option v-for="item in proviceData">{{item.title}}</option> 
+        
+      </select>  ‍‍
+      <select id="pid"  data-key="address" @change="selectChange" style="width:3rem;height:0.72rem;" > 
+          <option >请选择市</a> 
+          <option v-for="c_item in cityData">{{c_item.title}}</option> 
+        
+      </select> 
+    </div>
+    <a  href="merchantMap.html">
+    <div class="bank_card flexRowBetween">
+      <div class="input_before" style="width: 100%">
+        选择具体地址:{{detail}}
+      </div>
+      
+      </a>
+    </div>
+
+    <div class="bank_card flexRowBetween">
+      <div class="input_before">
+        福利待遇:
+      </div>
+      <div class="welfare font34" v-for="item in submitData.passage_array">{{item}}</div>
+    </div>
+</div>
+</div>
+<div class="p40">
+<div class="sum_txt" style="border:none;">
+      <div class="sumTxt">职位详情</div>
+  </div>
+  <div class="intro flexRowBetween" style="width:100%">
+      <div class="intro_edit">
+          <img src="images/pencil1.png">
+      </div>
+      <textarea v-model="submitData.content"></textarea>
+ </div>
+</div>
+<div style="height:0.96rem;line-height:0.96rem;background:#f2f2f2;width:100%;position:relative;font-size:.32rem;text-align:center;margin-top:0.2rem;">
+   福利待遇可多选
+   
+</div>
+<div class="p40">
+  <div class="flexRowBetween" id="choose">
+    <template v-for="item in labelDataTwo">
+      <div class="choose_item" :class="[submitData.passage_array.indexOf(item.title)>=0?'choosed':'']" @click="buttonClick" >
+        {{item.title}}
+      </div>
+    </template>
+  </div>
+
+</div>
+<div style="height:0.6rem;width:100%;margin-bottom: 0.6rem;">
+ 
+</div>
+<button class="confirm_bind"   @click="submit">
+  发布
+</button>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                proviceData:[],
+                cityData:[],
+                labelData:[],
+                labelDataTwo:[],
+                submitData:{
+                  category_id:33,
+                  title:'',
+                  description:'',
+                  gender:3,
+                  qualifications:'',
+                  experience:'',
+                  price:'',
+                  stock:'',
+                  age:'',
+                  content:'',
+                  passage_array:[],
+                  address:'',
+                  distributionOne:'',
+                  distributionTwo:'',
+                  distributionEntry:'',
+                  distributionEntryOne:'',
+                  distributionEntryTwo:'',
+                  lat:localStorage.getItem('lat'),
+                  lng:localStorage.getItem('lng'),
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                textArray:[],
+                detail:localStorage.getItem('detail'),
+                provice:''
+            }
+
+        },
+        
+        created: function () {
+            
+            var callback = (res)=>{
+              this.getLabelData();
+              this.getLabelDataTwo();
+              this.getCityData();
+            };
+            window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+
+            getLabelData(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                thirdapp_id:2
+              };
+              postData.getBefore = {
+                labelData:{
+                  tableName:'label',
+                  searchItem:{
+                    title:['=',['经验筛选']],
+                  },
+                  middleKey:'parentid',
+                  key:'id',
+                  condition:'in',
+                },
+              };
+
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.labelData.push.apply(self.labelData,res.info.data);
+                  console.log('labelData',self.labelData)
+                }else{
+                  alert('没有更多了');
+                };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+            getCityData(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                type:7,
+              };
+        
+              postData.order = {
+                  create_time:'asc'
+              }
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.proviceData.push.apply(self.proviceData,res.info.data);
+                  for (var i = 0; i < res.info.data.length; i++) {
+                    self.cityData.push.apply(self.cityData,res.info.data[i].child);
+                  }
+                  
+                }else{
+                  
+                  alert('没有更多了');
+                };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+
+            getLabelDataTwo(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                thirdapp_id:2
+              };
+              postData.getBefore = {
+                labelData:{
+                  tableName:'label',
+                  searchItem:{
+                    title:['=',['福利待遇']],
+                  },
+                  middleKey:'parentid',
+                  key:'id',
+                  condition:'in',
+                },
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.labelDataTwo.push.apply(self.labelDataTwo,res.info.data);
+                
+                }else{
+                  alert('没有更多了');
+                };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+
+            productAdd(){
+              const self = this;
+              const postData = {
+                data:self.submitData,
+                token:localStorage.getItem('merchant_token')    
+              };
+              const callback = (res)=>{
+               if(res.solely_code==100000){       
+                  alert('发布成功');
+                  location.reload();
+                }else{
+                  alert('网络故障')
+                }
+              }
+              window.base.productAdd(postData,callback);
+            },
+
+
+
+
+
+            selectChange(e){ 
+              const self = this;
+              self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
+              console.log('selectChange',self.submitData);
+            },
+
+         
+
+           
+
+
+            buttonClick(e){ 
+              const self = this;
+              console.log(window.base.getUserToken());
+              var text = window.base.getHtmlValue(e);
+              
+              var position = self.submitData.passage_array.indexOf(text);
+              if(position>=0){
+                self.submitData.passage_array.splice(position, 1); 
+              }else{
+                self.submitData.passage_array.push(text);
+              };
+              
+              console.log('buttonClick',self.submitData);
+            },
+
+
+
+
+            submit(){
+                const self = this;
+                if(window.base.checkComplete(self.submitData)){
+                    self.productAdd()
+                }else{
+                    alert('请补全信息')
+                }
+            },  
+        }
+    });
+            
+</script>
+</body>
+</html>

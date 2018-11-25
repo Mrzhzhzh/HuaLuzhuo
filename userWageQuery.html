@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>工资查询</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="divport" content="width=device-width, initial-scale=1">
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+    background: #f2f2f2;
+}
+.user_sort{
+  height:1.55rem;
+  display:flex;
+  align-items:center;
+  background:#fff;
+}
+.user_item{
+  height:.72rem;
+  text-align:center;
+}
+.query{
+  width:60%;
+  height:.62rem;
+  border-radius:.10rem;
+  background:#eee;
+  line-height:.62rem;
+  text-align:center;
+  margin:0 auto;
+}
+.query_click{
+  width:100%;
+  height:.72rem;
+  line-height:.72rem;
+  border-radius:.10rem;
+  background:#ed7101;
+  text-align:center;
+  color:#fff;
+  float:right;
+}
+.sort{
+  height:.72rem;
+  border:solid 1px #d9d9d9;
+}
+.sort_item{
+  width:25%;
+  text-align:center;
+  font-size:.28rem;
+  color:#666;
+}
+.sort_in{
+  width:38%;
+  margin:0 auto;
+  height:.72rem;
+}
+.sort_in image{
+  width:.23rem;
+  height:.19rem;
+}
+.cash_tlt{
+  height:1rem;
+  border-bottom:solid 1px #e0e0e0;
+  color:#ed7100;
+}
+.cash{
+  background:#fff;
+  margin-top:.25rem;
+  padding-bottom:.25rem;
+}
+.cash_tlt .tlt_item{
+  font-size:0.34rem;
+}
+.tlt_item{
+  text-align:center;
+  width:50%;
+  font-size:0.3rem;
+}
+.cash_cont{
+  flex-wrap:wrap;
+}
+.reward{
+  background:#fff;
+  margin-top:.25rem;
+  padding-bottom:.25rem;
+}
+.cash_show{
+  display:none
+}
+.reward .tlt_item{
+  width:50%;
+  height:.8rem;
+  line-height:.8rem;
+}
+.user_item input{
+  width:80%;
+  height:100%;
+  border: solid 1px rgb(237, 113, 0);
+  border-radius: 0.1rem;
+  padding:0 2%;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+<div class="user_sort p40 font36 flex">
+  <div class="user_item" style="width:54%;">
+     <input placeholder="请输入身份证号" class="font36" v-model='submitData.phone' style="width:90%;"></input>
+  </div>
+  <div class="user_item" style="width:30%;">
+     <input placeholder="请输入姓名" class="font36" v-model='submitData.title'></input>
+  </div>
+  <div class="user_item"  style="width:16%;">
+    <div class="query_click" v-on:click="submit">查询</div>
+  </div>
+</div>
+
+<div class="reward">
+  <div class="p40">
+    <div class="cash_tlt font36 flexRowBetween">
+      <div class="tlt_item">
+        我的工资(元)
+      </div>
+      <div class="tlt_item">
+        2018-4-8
+      </div>
+    </div>
+    <div class="cash_cont flex font32">
+      <div class="tlt_item">总工时:{{mainData.passage_array?mainData.passage_array.total:''}}</div>
+      <div class="tlt_item">单价:{{mainData.passage_array?mainData.passage_array.price:''}}</div>
+      <div class="tlt_item">补贴:{{mainData.passage_array?mainData.passage_array.allowance:''}}</div>
+      <div class="tlt_item">扣款:{{mainData.passage_array?mainData.passage_array.discount:''}}</div>
+      <div class="tlt_item">手续费:{{mainData.passage_array?mainData.passage_array.fee:''}}</div>
+      <div class="tlt_item">扣个税:{{mainData.passage_array?mainData.passage_array.tax:''}}</div>
+      <div class="tlt_item">应发工资:{{mainData.passage_array?mainData.passage_array.salary:''}}</div>
+      <div class="tlt_item">借支：{{mainData.passage_array?mainData.passage_array.total:''}}</div>
+      <div class="tlt_item" style="color:#ed7100">待发工资：{{mainData.passage_array?mainData.passage_array.aSalary:''}}</div>
+    </div>
+    
+  </div>
+</div>
+</div>
+</div>
+  <script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                submitData:{
+                  title:'',
+                  phone:''
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+            
+        },
+
+        methods:{
+
+            messageGet(){
+              const self = this;
+              const postData = {
+                token:localStorage.getItem('user_token'),
+                paginate:window.base.cloneForm(self.paginate),
+                searchItem:{
+                    type:3,
+                    user_type:2,
+                    title:self.submitData.title,
+                    phone:self.submitData.phone
+                }
+              };
+              const callback = (res)=>{
+                  if(res.info.data.length>0){
+                      self.mainData=res.info.data[0];
+                  }else{
+                      alert('没有信息！')
+                  }
+                  console.log(self.mainData)
+              }
+              window.base.messageGet(postData,callback);
+            },  
+
+             submit(){
+                const self = this;
+                const pass = window.base.checkComplete(self.submitData);
+                if(pass){
+                    self.messageGet();       
+                }else{
+                  alert('请补全信息');
+                };
+              },  
+
+            intoDetail(e) {
+                var self = this;
+                var art_id = window.base.getDataSet(e).id;
+                window.location.href = "./merchantResume.html?id=" + art_id;
+            },   
+
+           
+        }
+    });            
+</script>
+</body>
+</html>

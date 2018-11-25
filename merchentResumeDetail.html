@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>收到简历</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
+<script src="js/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+</head>
+<body>
+<style>
+.w750{
+    color:#666;
+    width:100%;
+    min-height:100%;
+}
+.w710{
+  height:2.45rem;
+  align-items:center;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+}
+.job_list{
+  height:1.65rem;
+  width:100%;
+}
+.list_left{
+  width:61%;
+  height:1.7rem;
+}
+.list_right{
+  width:20%;
+  height:1.7rem;
+  text-align:right;
+}
+.job_type{
+  height:33%;
+  font-size:.32rem;
+  color:#333;
+  display:flex;
+  align-items:center;
+  margin-right:.24rem;
+}
+.treatment{
+  height:33%;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+.treatment_sort{
+  color:#666;
+  margin-right:.14rem;
+  background: #fff;
+}
+.treatment_sort img{
+  width:.22rem;
+  height:.22rem;
+  margin-right:0.04rem;
+}
+.company_img{
+  width:16%;
+  height:100%;
+  align-items:center;
+  display:flex;
+}
+.company_img img{
+  width:.60rem;
+  height:.60rem;
+}
+.company_introuce{
+  height:33%;
+  color:#666;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+.company_name{
+  height:50%;
+  font-size:.32rem;
+  color:#333;
+}
+.send_datail{
+  width:60%;
+}
+.send_tiem{
+  font-size:.26rem;
+  color:#999;
+}
+.send_need{
+  font-size:.26rem;
+  color:#666;
+}
+.payment{
+  height:50%;
+  font-size:.32rem;
+  color:#666;
+}
+.hongbao{
+  height:50%;
+}
+.hongbao img{
+  width:.7rem;
+  height:.84rem;
+}
+.list_img{
+  width:21%;
+}
+.user_img{
+  width:0.96rem;
+  height:0.96rem;
+  border-radius:50%;
+  overflow:hidden;
+  border:solid 1px #e0e0e0;
+}
+.input_left{
+  width:2.20rem;
+}
+.handle1{
+  width:50%;
+  display:flex;
+  text-align:center;
+  height:0.96rem;
+  background:#ed7101;
+  color:#fff;
+  align-items:center;
+  
+}
+.handle2{
+  width:25%;
+  display:flex;
+  text-align:center;
+  height:100%;
+  text-align:center;
+  height:100%;
+  background:#0ea884; 
+  color:#fff;
+}
+.handle_in{
+  width:70%;
+  margin:0 auto;
+  color:#fff;
+}
+.resume_handle{
+  width:100%;
+  height:0.96rem;
+  position:fixed;
+  bottom:0;
+}
+.resume_handle img{
+  width:.48rem;
+  height:.48rem;
+}
+a{color:#fff;}
+</style>
+<div id="app">
+<div class="w750">
+<div class="w710">
+    <div class="job_list flexRowBetween">
+      <div class="list_img">
+        <div class="user_img">
+            <img class="user_img" :src="mainData.headImgUrl" />
+        </div>
+      </div>
+      <div class="list_left">
+        <div class="flex">
+          <div class="job_type avoidOverflow font40">{{mainData.info?mainData.info.name:''}}</div>
+ 
+        </div>
+        <div class="treatment flex font28">
+          <div class="treatment_sort"><img src="images/resume1.png"/>{{mainData.info?mainData.info.address:''}}</div>
+          <div class="treatment_sort"><img src="images/resume2.png"/>{{mainData.info.gender=='1'?'男':'女'}}</div>
+          <div class="treatment_sort"><img src="images/resume3.png"/>{{mainData.info?mainData.info.highEducation:''}}</div>
+          <div class="treatment_sort"><img src="images/resume4.png"/>{{mainData.info?mainData.info.email:''}}</div>
+          <div class="treatment_sort"><img src="images/resume5.png"/>{{mainData.info?mainData.info.date:''}}</div>
+        </div>
+        <div class="company_introuce avoidOverflow font36">
+        应聘职位:掏粪掏粪掏粪掏粪掏粪掏粪
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<div class="p40">
+    <div class="sum_txt flexRowBetween">
+        <div class="sumTxt">基础信息</div>
+    </div>
+    <div class="gig" style="padding-left:.42rem;">
+        <div class="phone_infor">
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    姓名:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.name:''}}</div>
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    性别:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.gender==0?'女':'男':''}}</div>
+            </div>
+            <div class="bank_card flexRowBetween">
+                <div class="input_before">
+                    婚姻状况:
+                </div>
+                <div class="resume_info">{{mainData.info?mainData.info.married==0?'未婚':'已婚':''}}</div>
+            </div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                出生年月:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.date:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                身份证号:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.idCard:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                最高学历:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.highEducation:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                工作经验:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.email:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                目前状态:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.nowStatus:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                期望薪资:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.idCard:''}}</div>
+        </div>
+        <div class="bank_card flexRowBetween">
+            <div class="input_before">
+                期望地区:
+            </div>
+            <div class="resume_info">{{mainData.info?mainData.info.address:''}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="p40">
+    <div class="sum_txt flexRowBetween">
+        <div class="sumTxt">工作经历</div>
+     
+    </div>
+    <div class="gig">
+        <div class="education" v-for="(item, index) in workExperience">
+            <div class="flexRowBetween">
+                <div>
+                    <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                
+            </div>
+            <div class="expericence_list">
+                <div class="expericence">
+                    <div class="exper_company"><span>{{item.companyName}}-{{item.job}}</span></div>
+                    <div class="detail"><span>{{item.content}}</span></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p40" style="margin-bottom: 1rem;">
+    <div class="sum_txt flexRowBetween">
+        <div class="sumTxt">教育经历</div>
+    
+    </div>
+    <div class="gig">
+        <div class="education" v-for="(item, index) in education">
+            <div class="flexRowBetween">
+                <div>
+                    <text>●</text>{{item.startDate}}-{{item.endDate}}</div>
+                
+            </div>
+            <div class="expericence_list">
+                <div class="expericence">
+                    <div class="exper_company"><span>学校：{{item.schoolName}}</span></div>
+                    <div class="exper_company"><span>专业：{{item.object}}</span></div>
+                    <div class="exper_company"><span>学历：{{item.highEdu}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:0.95rem;width:100%;"></div>
+<div class="resume_handle flexRowBetween font34">
+    <div class="handle1">
+      <div class="handle_in flexRowaround">
+        <img src="images/resume6.png"/>
+        <div style="color:#fff;">{{mainData.info?mainData.info.phone:''}}</div>
+      </div>
+    </div>
+    <div class="handle2" style="margin:0 1px;">
+      <div class="handle_in" >
+        <div style="color:#fff;height:0.95rem;line-height:0.95rem;">移到已入职</div>
+      </div>
+    </div>
+    <div class="handle2">
+      <div class="handle_in">
+        <div style="color:#fff;height:0.95rem;line-height:0.95rem;">删除</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                
+                mainData:[],
+                distributionData:[],
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+
+            }
+
+        },
+        
+        created: function () {
+
+          var callback = (res)=>{
+            this.getMainData();
+          };
+          window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+        getMainData(){
+          const self = this;
+          const postData = {};
+          postData.paginate = window.base.cloneForm(self.paginate);
+          postData.token = localStorage.getItem('merchant_token');
+          postData.searchItem = {
+            user_type:['in',[0]],
+   			user_no:window.base.GetRequest().id					
+          }
+          const callback = (res)=>{
+            if(res.info.data.length>0){
+              	self.mainData = res.info.data[0]
+             	self.mainData.info.workExperience = self.mainData.info.workExperience?self.mainData.info.workExperience:[];
+                self.workExperience = self.mainData.info.workExperience;
+                self.education = self.mainData.info.education;
+            }else{
+              alert('数据错误')
+            };
+            
+          };
+          window.base.userGet(postData,callback);
+        }
+       
+    }
+});            
+</script>
+</body>
+</html>

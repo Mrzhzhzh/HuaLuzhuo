@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>发布信息修改</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="z8EeuYl0nS" />
+<meta name="keywords" content="华路卓">
+<meta name="description" content="华路卓">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<link href="css/basic.css" rel="stylesheet"/>
+<script src="js/rem.js"></script>
+<script src="js/browser.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/base.js" type="application/javascript"></script>
+<script src="js/jquery1.8.3.js"></script>
+</head>
+<body>
+<style>
+.p40{
+  margin-bottom: 0.6rem;
+}
+.intro{
+  width:100%;
+}
+.letter_txt{
+  letter-spacing: 0.28rem;
+}
+</style>
+<div id="app">
+<div class="w750">
+  <div class="p40">
+      <div class="sum_txt flexRowBetween">
+          <div class="sumTxt">基础信息</div>
+      </div>
+      <div class="phone_infor">
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  岗 位:
+              </div>
+              <input v-model="submitData.description"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  薪 资:
+              </div>
+              <input v-model="submitData.price"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+       
+      </div>
+      <div class="phone_infor">
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  工作地点:
+              </div>
+              <input v-model="submitData.address"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  学 历:
+              </div>
+              <input v-model="submitData.qualifications"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+      </div>
+      <div class="phone_infor">
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  工作经验:
+              </div>
+              <input v-model="submitData.experience"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_before">
+                  年 龄:
+              </div>
+              <input v-model="submitData.age"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+            <div class="bank_card flexRowBetween">
+		      <div class="input_before">
+		        性别:
+		      </div>
+		       	<select id="pid"   v-model='submitData.gender' style="width:2rem;height:0.72rem;"> 
+		          <option label="请选择":value='3'></a> 
+		          <option label="男女不限" :value='2'></a> 
+		          <option label="男" :value='1'></a> 
+		          <option label="女" :value='0'></a> 
+		      </select> 
+		    </div>
+            <div class="bank_card flexRowBetween">
+		      <div class="input_before">
+		        福利待遇:
+		      </div>
+		      <div class="choose_item" v-for="item in submitData.passage_array">{{item}}</div>
+		    </div>
+      </div>
+      <div class="sum_txt" style="border:none;">
+          <div class="sumTxt">职位详情</div>
+      </div>
+      <div class="intro flexRowBetween">
+          <div class="intro_edit">
+              <img src="images/pencil1.png">
+          </div>
+          <textarea v-model="submitData.content"></textarea>
+      </div>
+      <div class="sum_txt">
+          <div class="sumTxt">分享设置</div>
+      </div>
+      <div class="phone_infor">
+          <div class="bank_card flexRowBetween">
+              <div class="input_before" style="width:30%">
+                  分享金额:
+              </div>
+              <input v-model="submitData.distributionOne"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_before" style="width:30%">
+                  数量设置:
+              </div>
+              <input v-model="submitData.stock"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+          <div class="bank_card flexRowBetween">
+              <div class="input_before" style="width:30%"> 
+                  入职奖励:
+              </div>
+              <input v-model="submitData.distributionEntry"></input>
+              <div class="pencil">
+                  <img src="images/pencil.png">
+              </div>
+          </div>
+      </div>
+  </div>
+  <div style="height:0.70rem;width:100%;"></div>
+  <div class="confirm_bind">
+      <div @click ="submit" class="color1">确认修改</div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+            
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                proviceData:[],
+                cityData:[],
+                labelData:[],
+                labelDataTwo:[],
+                submitData:{
+                  category_id:33,
+                  title:'',
+                  description:'',
+                  gender:'',
+                  qualifications:'',
+                  experience:'',
+                  price:'',
+                  stock:'',
+                  age:'',
+                  content:'',
+                  passage_array:[],
+                  address:'',
+                  distributionOne:'',
+                  content:'',
+                  distributionEntry:'',
+          
+       
+              
+                },
+                
+                paginate: {
+                    
+                    count: 0,
+                    currentPage: 1,
+                    pagesize: 6,
+                    is_page: true,
+                },
+
+                searchItem:{
+                    
+                },
+                pageArray:[],
+                allPages:0,
+                linkPage:'',
+                textArray:[],
+                detail:localStorage.getItem('detail'),
+                provice:''
+            }
+
+        },
+        
+        created: function () {
+            
+            var callback = (res)=>{
+              this.getMainData();
+             
+            };
+            window.base.getMerchantToken(callback);
+        },
+
+        methods:{
+
+
+
+            getMainData(){
+              const self = this;
+              console.log(window.base.GetRequest().id)
+              const postData = {};
+              
+              postData.searchItem = {
+                id:window.base.GetRequest().id	
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                   self.mainData = res.info.data[0]
+                   self.submitData.title = self.mainData.title;
+                   self.submitData.qualifications = self.mainData.qualifications;
+                   self.submitData.experience = self.mainData.experience;
+                   self.submitData.price = self.mainData.price;
+                   self.submitData.content = self.mainData.content;
+                   self.submitData.stock = self.mainData.stock;
+                   self.submitData.age = self.mainData.age;
+                   self.submitData.address = self.mainData.address;
+                   self.submitData.description = self.mainData.description;
+                   self.submitData.distributionOne = self.mainData.distributionOne;
+                   self.submitData.distributionEntry = self.mainData.distributionEntry;
+                   self.submitData.passage_array = self.mainData.passage_array;
+                   self.submitData.gender = self.mainData.gender;
+                }else{
+                  alert('数据错误');
+                };
+              };
+              window.base.productGet(postData,callback);
+            },
+
+
+
+
+            productUpdate(){
+              const self = this;
+              const postData = {
+                data:self.submitData,
+                token:localStorage.getItem('merchant_token')    
+              };
+              const callback = (res)=>{
+               if(res.solely_code==100000){       
+                  alert('修改成功');
+                  window.history.back()
+                }else{
+                  alert('网络故障')
+                }
+              }
+              window.base.productUpdate(postData,callback);
+            },
+
+
+
+
+
+            selectChange(e){ 
+              const self = this;
+              self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
+              console.log('selectChange',self.submitData);
+            },
+
+         
+
+    
+
+
+
+
+            submit(){
+                const self = this;
+                if(window.base.checkComplete(self.submitData)){
+                    self.productUpdate()
+                }else{
+                	console.log(self.submitData)
+                    alert('请补全信息')
+                }
+            },  
+        }
+    });
+            
+</script>
+</body>
+</html>
