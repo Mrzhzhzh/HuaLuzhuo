@@ -171,6 +171,7 @@ a{color:#fff;}
 </style>
 <div id="app">
   <div class="w750">
+    <form>
       <div class="p40">
           <div class="sum_txt flexRowBetween">
               <div class="sumTxt">基础信息</div>
@@ -299,11 +300,13 @@ a{color:#fff;}
                   <img src="images/choose_icon.png">
               </div>
           </div>
-          <div class="btn flexRowBetween">
-              <button bindtap="setValue">取消</button>
-              <button class="save" style="background:#ed7101;" v-on:click="submit">保存</button>
-          </div>
+          
       </div>
+    </form>
+    <div class="btn flexRowBetween">
+        <button @click="setValue"  name="button" value="取消">取消</button>
+        <button class="save" style="background:#ed7101;" @click="submit">保存</button>
+    </div>
   </div>
 </div>
 <script type="text/javascript">  
@@ -355,6 +358,22 @@ a{color:#fff;}
         },
 
         methods:{
+
+          setValue(){
+            const self = this;
+            self.submitData = {
+              date:'',
+              gender:3,
+              name:'',
+              idCard:'',
+              email:'',
+              highEducation:'',
+              address:'',
+              people:'',
+              nowStatus:3,
+              married:3
+            };
+          },
 
           userGet(){
             const self = this;
@@ -408,9 +427,6 @@ a{color:#fff;}
             window.base.labelGet(postData,callback);
           },
 
-
-
-
           userInfoUpdate(){
             const self = this;
             const postData = {};
@@ -430,13 +446,6 @@ a{color:#fff;}
             };
              window.base.userInfoUpdate(postData,callback);
           },
-
-        
-
-          
-
-          
-
           submit(){
             const self = this;
             const pass = window.base.checkComplete(self.submitData);
