@@ -104,18 +104,20 @@ a{color:#fff;}
     </div>
   </div>
 </div>
+1.02
 <div style="height:2rem;background:#eee;align-items:center;width:100%;display:flex;">
-  <div class="sumIn font40" @click="pay">确认充值</div>
+  <div class="sumIn font40" @click="buttonClicked?'':pay()">确认充值</div>
 </div>
 </div>
 </div>
-<script type="text/javascript">
+<script type="text/babel">
       
       var app = new Vue({
         el: '#app',
         data: function() {
           return {
-            money:''
+            money:'',
+            buttonClicked:false
           }
 
         },
@@ -127,14 +129,16 @@ a{color:#fff;}
         methods:{
   
 
-            pay(order_id){
+            pay(){
               const self = this;
+              self.buttonClicked = true;
               const postData = {
                 token:localStorage.getItem('merchant_token'),
                 openid:window.base.getStorageArray('user_info')[0].openid,
                 wxPay:self.money,
                 wxPayStatus:0
               };
+            
               postData.payAfter=[];
 	          postData.payAfter.push(
 	            {
@@ -150,12 +154,12 @@ a{color:#fff;}
 	            },       
 	          );
               const callback = (res)=>{
-                
                 if(res.solely_code==100000){
                   const payCallback=(payData)=>{
 
                     if(payData==1){
-                      alert('充值成功')
+                      self.buttonClicked = false;
+                      alert('充值成功');
                       window.location.href='merchantPropertyIn.html'; 
                     }
                   };

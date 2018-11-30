@@ -83,7 +83,7 @@ a{color:#fff;}
 <div class="w750">
     <div class="info_img">
         <div class="user_img">
-            <img class="user_img" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicBxBs5icUzUlaSePibpqicPZO6FwKqibiaCJZkSPzibgOl9dc4Wr4TancmXJlU1ctJ5jf37ZMOFdicaf6Q/132" />
+            <img class="user_img" :src="mainData.headImgUrl" />
         </div>
     </div>
     <div style="height:.14rem;background:#f2f2f2;width:100%;"></div>
@@ -102,9 +102,9 @@ a{color:#fff;}
                 性&nbsp;&nbsp;&nbsp;别:
             </div>
               ‍‍<select id="pid"   v-model='submitData.gender' style="width:2rem;height:0.72rem;"> 
-		          <option label="请选择":value='3'></a> 
-		          <option label="男" :value='1'></a> 
-		          <option label="女" :value='0'></a> 
+		          <option label="请选择":value='3'>请选择</a> 
+		          <option label="男" :value='1'>男</a> 
+		          <option label="女" :value='0'>女</a> 
 		      </select> 
             
         </div>
@@ -118,23 +118,12 @@ a{color:#fff;}
             </div>
            
         </div>
-        <!-- <div class="infor_list flexRowBetween">
-            <div class="infor_left">
-                验证码:
-            </div>
-            <div class="infor_center" style="width:47%">
-                <input placeholder="请输入验证码" class="font36"></input>
-            </div>
-            <div class="infor_right font34 code_click">
-                获取验证码
-            </div>
-        </div> -->
     </div>
-    <div class="confirm_bind"> 
-      <div v-on:click="submit" class="color1">确认修改</div> </div>
+    <div class="confirm_bind" v-on:click="submit" > 
+      <div class="color1">确认修改</div> </div>
 </div>
 </div>
-<script type="text/javascript">
+<script type="text/babel">
             
     var app = new Vue({
         el: '#app',
@@ -209,9 +198,10 @@ a{color:#fff;}
                 alert('网络故障')
               };
             };
-             //window.base.userInfoUpdate(postData,callback);
+             window.base.userInfoUpdate(postData,callback);
           },
           
+
           submit(){
             const self = this;
             var phone = self.submitData.phone;

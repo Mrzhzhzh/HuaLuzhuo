@@ -536,7 +536,7 @@ window.base={
     checkComplete:function(obj){
         var pass = true;
         for(var key in obj){
-          if(!obj[key]){
+          if(!obj[key]&&obj[key]!=0){
             pass = false;
           };
         };

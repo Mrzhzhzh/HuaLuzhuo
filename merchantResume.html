@@ -235,10 +235,15 @@ a{color:#fff;}
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
+                isLoadAll:false,
 
             }
 
         },
+
+        mounted () {
+		  window.addEventListener('scroll', this.handleScroll)
+		},
         
         created: function () {
 
@@ -252,6 +257,17 @@ a{color:#fff;}
         },
 
         methods:{
+
+    	handleScroll(){
+			var wScrollY = window.scrollY; // 当前滚动条位置  
+		    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+		    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
+		    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll) {   
+
+		        this.paginate.currentPage++;
+				this.getMainData();
+		    }; 
+		},
 
         getMainData(isNew){
           const self = this;
@@ -310,6 +326,7 @@ a{color:#fff;}
             if(res.info.data.length>0){
               self.mainData.push.apply(self.mainData,res.info.data);
             }else{
+              self.isLoadAll=false
               alert('没有更多了')
             };
             

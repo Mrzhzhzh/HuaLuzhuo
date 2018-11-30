@@ -93,11 +93,16 @@ a{color:#fff;}
                 allPages:0,
                 linkPage:'',
                 numOne:'',
-                numTwo:''
+                numTwo:'',
+                isLoadAll:false,
             }
 
         },
-        
+
+        mounted () {
+		  window.addEventListener('scroll', this.handleScroll)
+		},
+
         created: function () {
           var callback = (res)=>{
             this.distriGet();
@@ -107,6 +112,18 @@ a{color:#fff;}
         },
 
         methods:{
+
+
+        	handleScroll(){
+				var wScrollY = window.scrollY; // 当前滚动条位置  
+			    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+			    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
+			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll) {   
+   
+			        this.paginate.currentPage++;
+					this.getMainData();
+			    }; 
+			},
 
             distriGet(){
                 const self = this;
@@ -138,7 +155,8 @@ a{color:#fff;}
                       	};
                       	console.log(self.idData)
                     }else{
-                        alert('数据错误')
+                    	self.isLoadAll=true;
+                        alert('没有更多了');
                     }
                     self.numOne = self.mainData.length;
                   self.distriGetTwo();
@@ -170,7 +188,10 @@ a{color:#fff;}
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                     	self.mainDataTwo.push.apply(self.mainDataTwo,res.info.data);	
-                    };
+                    }else{
+                    	self.isLoadAll: true;
+                        alert('没有更多了');
+                    }
                     self.numTwo = self.mainDataTwo.length;
                     
                     self.mainDataThree=self.mainDataTwo.concat(self.mainData);

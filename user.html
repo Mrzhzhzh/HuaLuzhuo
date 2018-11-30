@@ -384,8 +384,9 @@
                     	self.distriDataTwo.push.apply(self.distriDataTwo,res.info.data);	
                     };
                     self.numTwo = self.distriDataTwo.length;
+                    console.log(self.numOne)
+                    console.log(self.numTwo)
                     
-                    self.distriDataThree=self.distriDataTwo.concat(self.distriDataOne);
                    
                 }
                 window.base.distriGet(postData,callback);
