@@ -536,7 +536,7 @@ window.base={
     checkComplete:function(obj){
         var pass = true;
         for(var key in obj){
-          if(!obj[key]&&obj[key]!=0){
+          if(!obj[key]&&!obj[key]=='0'){
             pass = false;
           };
         };
@@ -544,7 +544,6 @@ window.base={
         console.log(pass);
     },
 
-    
 
     articleOne:function(param,callback) {
         var allParams = {
