@@ -47,44 +47,46 @@
 }
 </style>
 <div id="app">
-<div class="w750">
-   <a  href="merchantMap.html" class="p40">
-    <div class="bank_card flexRowBetween">
-      <div class="input_before" style="width: 23%">
-        选择地址:
+
+  <div class="w750">
+    <a  href="merchantMap.html" class="p40">
+      <div class="bank_card flexRowBetween">
+        <div class="input_before" style="width: 23%">
+          选择地址:
+        </div>
+        <div class="font24 color6" style="width:67%;">
+          {{detail}}
+        </div>
+        <div style="width:10%;text-align: right;">
+          <img src="images/position.png" style="width:0.44rem;height:0.44rem;">
+        </div>
       </div>
-      <div class="font24 color6" style="width:67%;">
-        {{detail}}
-      </div>
-      <div style="width:10%;text-align: right;">
-        <img src="images/position.png" style="width:0.44rem;height:0.44rem;">
-      </div>
-    </div>
     </a>
- <div class="p40">
-  <div class="sum_txt flexRowBetween">
-    <div class="sumTxt">基础信息</div>
   </div>
-  <div class="phone_infor" >
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        标题:
-      </div>
-      <input v-model='submitData.title'></input>
+  <div class="p40">
+    <div class="sum_txt flexRowBetween">
+      <div class="sumTxt">基础信息</div>
     </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        薪酬:
+    <div class="phone_infor" >
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          标题:
+        </div>
+        <input v-model='submitData.title'></input>
       </div>
-      <input  v-model='submitData.price'></input>
-    </div>
-    <div class="bank_card flexRowBetween">
-      <div class="input_before">
-        职位:
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          薪酬:
+        </div>
+        <input  v-model='submitData.price'></input>
       </div>
-      <input v-model='submitData.description'></input>
+      <div class="bank_card flexRowBetween">
+        <div class="input_before">
+          职位:
+        </div>
+        <input v-model='submitData.description'></input>
+      </div>
     </div>
-   </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         人数:
@@ -149,7 +151,7 @@
       </div>
       <input  v-model='submitData.distributionEntryTwo'></input>
     </div>
-   
+     
     <div class="bank_card flexRowBetween">
       <div class="input_before">
         性别:
@@ -165,58 +167,52 @@
       <div class="input_before" style="width: 37%">
         工作地点:
       </div>
-       ‍‍<select id="pid"   style="width:3rem;height:0.72rem;" > 
-          <option >请选择省</a> 
-          <option v-for="item in proviceData">{{item.title}}</option> 
-        
+      <select id="pid"   style="width:3rem;height:0.72rem;" > 
+        <option >请选择省</a> 
+        <option v-for="item in proviceData">{{item.title}}</option> 
       </select>  ‍‍
       <select id="pid"  data-key="address" @change="selectChange" style="width:3rem;height:0.72rem;" > 
           <option >请选择市</a> 
           <option v-for="c_item in cityData">{{c_item.title}}</option> 
-        
       </select> 
     </div>
-    </div>
-
     <div class="p40 bank_card flexRowBetween">
       <div class="input_before">
         福利待遇:
       </div>
       <div class="welfare font34" v-for="item in submitData.passage_array">{{item}}</div>
     </div>
-</div>
-</div>
-<div class="p40">
-<div class="sum_txt" style="border:none;">
-      <div class="sumTxt">职位详情</div>
-  </div>
-  <div class="intro flexRowBetween" style="width:100%">
-      <div class="intro_edit">
-          <img src="images/pencil1.png">
-      </div>
-      <textarea v-model="submitData.content"></textarea>
- </div>
-</div>
-<div style="height:0.96rem;line-height:0.96rem;background:#f2f2f2;width:100%;position:relative;font-size:.32rem;text-align:center;margin-top:0.2rem;">
-   福利待遇可多选
-   
-</div>
-<div class="p40">
-  <div class="flexRowBetween" id="choose">
-    <template v-for="item in labelDataTwo">
-      <div class="choose_item" :class="[submitData.passage_array.indexOf(item.title)>=0?'choosed':'']" @click="buttonClick" >
-        {{item.title}}
-      </div>
-    </template>
-  </div>
 
-</div>
-<div style="height:0.6rem;width:100%;margin-bottom: 0.6rem;">
- 
-</div>
-<button class="confirm_bind"   @click="submit">
-  发布
-</button>
+    <div class="p40">
+      <div class="sum_txt" style="border:none;">
+          <div class="sumTxt">职位详情</div>
+      </div>
+      <div class="intro flexRowBetween" style="width:100%">
+          <div class="intro_edit">
+              <img src="images/pencil1.png">
+          </div>
+          <textarea v-model="submitData.content"></textarea>
+      </div>
+    </div>
+    <div style="height:0.96rem;line-height:0.96rem;background:#f2f2f2;width:100%;position:relative;font-size:.32rem;text-align:center;margin-top:0.2rem;">
+       福利待遇可多选
+       
+    </div>
+    <div class="p40">
+      <div class="flexRowBetween" id="choose">
+        <template v-for="item in labelDataTwo">
+          <div class="choose_item" :class="[submitData.passage_array.indexOf(item.title)>=0?'choosed':'']" @click="buttonClick" >
+            {{item.title}}
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+  <div style="height:0.6rem;width:100%;margin-bottom: 0.6rem;">
+  </div>
+  <button class="confirm_bind"   @click="buttonCanClick?submit():''">
+    发布
+  </button>
 </div>
 <script type="text/javascript">
             
@@ -266,7 +262,8 @@
                 linkPage:'',
                 textArray:[],
                 detail:localStorage.getItem('detail'),
-                provice:''
+                provice:'',
+                buttonCanClick:true
             }
 
         },
@@ -282,7 +279,6 @@
         },
 
         methods:{
-
 
             getLabelData(){
               const self = this;
@@ -331,9 +327,7 @@
                   for (var i = 0; i < res.info.data.length; i++) {
                     self.cityData.push.apply(self.cityData,res.info.data[i].child);
                   }
-                  
                 }else{
-                  
                   alert('没有更多了');
                 };
               };
@@ -362,7 +356,6 @@
               const callback = (res)=>{
                 if(res.info.data.length>0){
                   self.labelDataTwo.push.apply(self.labelDataTwo,res.info.data);
-                
                 }else{
                   alert('没有更多了');
                 };
@@ -382,26 +375,19 @@
                   alert('发布成功');
                   location.reload();
                 }else{
-                  alert('网络故障')
-                }
-              }
+                  alert('网络故障');
+                  self.buttonCanClick = true;
+                };
+
+              };
               window.base.productAdd(postData,callback);
             },
-
-
-
-
 
             selectChange(e){ 
               const self = this;
               self.submitData[window.base.getDataSet(e).key] = window.base.getSelectValue(e);
               console.log('selectChange',self.submitData);
             },
-
-         
-
-           
-
 
             buttonClick(e){ 
               const self = this;
@@ -418,17 +404,18 @@
               console.log('buttonClick',self.submitData);
             },
 
-
-
-
             submit(){
-                const self = this;
-                if(window.base.checkComplete(self.submitData)){
-                    self.productAdd()
-                }else{
-                    alert('请补全信息')
-                }
+              
+              const self = this;
+              self.buttonCanClick = false;
+              if(window.base.checkComplete(self.submitData)){
+                  self.productAdd()
+              }else{
+                  alert('请补全信息');
+                  self.buttonCanClick = true;
+              }
             },  
+
         }
     });
             
