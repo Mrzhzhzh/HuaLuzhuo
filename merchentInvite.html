@@ -255,7 +255,9 @@ a{color:#fff;}
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-                num:'0'
+                num:'0',
+                 buttonClick:false,
+				isLoadAll:false
             }   
 
         },
@@ -275,6 +277,21 @@ a{color:#fff;}
         },
 
         methods:{
+
+
+
+			handleScroll(){
+
+				var wScrollY = window.scrollY; // 当前滚动条位置  
+			    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+			    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
+			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll&&!this.buttonClick) {   
+   					
+   					this.buttonClick = true;
+			        this.paginate.currentPage++;
+					this.productGet();
+			    }; 
+			},
 
             productGet(isNew){
                 const self = this;
@@ -317,8 +334,10 @@ a{color:#fff;}
                        
 
                     }else{
-                        alert('没有更多了')
-                    }
+		              self.isLoadAll=false;
+		              alert('没有更多了');
+		            };
+		            self.buttonClick = false;
                   
                 }
                 window.base.orderGet(postData,callback);

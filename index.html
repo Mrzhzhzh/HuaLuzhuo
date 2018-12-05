@@ -308,7 +308,8 @@ a{
                 num:'100000',
                 order:{},
                 id:'',
-                isLoadAll:false
+                buttonClick:false,
+				isLoadAll:false
             }   
 
         },
@@ -342,10 +343,10 @@ a{
 				var wScrollY = window.scrollY; // 当前滚动条位置  
 			    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
 			    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
-			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll) {   
-   
+			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll&&!this.buttonClick) {   
+   					this.buttonClick = true;
 			        this.paginate.currentPage++;
-					this.getMainData();
+					this.productGet();
 			    }; 
 			},
 
@@ -361,6 +362,7 @@ a{
                     }
                 };
                 const postData = {}
+                postData.paginate = window.base.cloneForm(self.paginate);
                 postData.searchItem =  window.base.cloneForm(self.searchItem);
                 postData.order =  window.base.cloneForm(self.order);
                 postData.getAfter = {
@@ -382,7 +384,8 @@ a{
                     }else{
                     	self.isLoadAll=true;
                         alert('没有更多了');
-                    }
+                    };
+                    self.buttonClick = false;
                     console.log(self.passage_array)
                 }
                 window.base.productGet(postData,callback);

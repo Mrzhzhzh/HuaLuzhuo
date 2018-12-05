@@ -140,10 +140,17 @@ a{color:#fff;}
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
+                isLoadAll:false,
+                buttonClick:false,
+				isLoadAll:false
 
             }
 
         },
+
+          mounted () {
+            window.addEventListener('scroll', this.handleScroll)
+          },
         
         created: function () {
           var callback = (res)=>{
@@ -154,8 +161,30 @@ a{color:#fff;}
 
         methods:{
 
-            productGet(){
-                const self = this;
+			handleScroll(){
+
+				var wScrollY = window.scrollY; // 当前滚动条位置  
+			    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+			    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
+			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll&&!this.buttonClick) {   
+   					
+   					this.buttonClick = true;
+			        this.paginate.currentPage++;
+					this.productGet();
+			    }; 
+			},
+
+            productGet(isNew){
+              const self = this;
+              if(isNew){
+                    self.mainData = [];
+                    self.paginate = {
+                        count: 0,
+                        currentPage: 1,
+                        pagesize: 6,
+                        is_page: true,
+                    }
+                };
                 const postData = {
                   paginate:window.base.cloneForm(self.paginate),
                   searchItem:{
@@ -194,10 +223,12 @@ a{color:#fff;}
                 }
                 const callback = (res)=>{
                     if(res.info.data.length>0){
-                        self.mainData.push.apply(self.mainData,res.info.data);
+                     self.mainData.push.apply(self.mainData,res.info.data);
                     }else{
-                        alert('没有更多了')
-                    }
+                      self.isLoadAll = true;
+                      alert('没有更多了');
+                    };
+                    self.buttonClick = false;
                     console.log(self.mainData)
                 }
                 window.base.productGet(postData,callback);

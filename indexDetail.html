@@ -297,7 +297,7 @@ div{
                             <div class="font38 color">{{mainData.price}}</div>
                         </div>
                         <div class="job_address  flexRowBetween">
-                            <div class="address font36 color6">工作地点：高新大都荟</div>
+                            <div class="address font36 color6">工作地点：{{mainData.address}}</div>
                             <div class="time font32 color9">{{mainData.create_time}}</div>
                         </div>
 
@@ -389,7 +389,7 @@ div{
                 <a href="tel://merchantData.phone" style="width:0.6rem;height:0.6rem;margin:0 auto;"><img src="images/phone.png"/></a>
             </div>
            
-            <div class="footer2"  v-on:click="submit" style="border-left:1px solid #fff">{{checkOrderData.length>0?'已投递':'投递简历'}}</div>
+            <div class="footer2"  @click="buttonCanClick?submit():''" style="border-left:1px solid #fff">{{checkOrderData.length>0?'已投递':'投递简历'}}</div>
         </div>
     </div>
 </div>
@@ -421,10 +421,13 @@ div{
                 allPages:0,
                 linkPage:'',
                 isCollect:false,
-                merchantData:{}
+                merchantData:{},
+                buttonCanClick:true
             }
 
         },
+
+      
         
         created: function () {
             var callback = (res)=>{
@@ -439,7 +442,9 @@ div{
 
         methods:{
 
-        
+            
+
+
 
             productGet(){
                 const self = this;
@@ -671,11 +676,13 @@ div{
 
             submit(){
             	const self = this;
+            	self.buttonCanClick = false;
             	if(self.userData.info.name==''||self.userData.info.address==''||self.userData.info.highEducation==''){
             		alert('请至个人中心补全简历!');
             		window.location.href='user.html'; 
             	}else if(self.checkOrderData.length>0){
             		alert('请勿重复投递')
+            		self.buttonCanClick = true;
             	}else{
             		self.addOrder()
             	}
@@ -695,10 +702,12 @@ div{
                 };
                 const callback = (res)=>{
                   if(res&&res.solely_code==100000){
-                  	alert('投递成功！')
+                  	alert('投递成功！');
+                  	location.reload();
                     setTimeout(function(){
                         self.buttonClicked=false
-                    },1000);       
+                    },1000);
+                           
                   }else{
                     alert('网络故障')
                     self.buttonClicked = false

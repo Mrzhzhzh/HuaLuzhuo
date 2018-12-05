@@ -98,10 +98,10 @@ a{color:#fff;}
     </div>
     <div class="handle">
       <div class="handle_top" :data-id="item.id" :data-num="0" @click="orderUpdate" >
-        	<img src="images/interview2.png" >
+        	<img src="images/interview2.png" :data-id="item.id" :data-num="0" @click="orderUpdate" >
       </div>
       <div class="handle_top handle_bottom" :data-id="item.id" :data-num="1" @click="orderUpdate">
-      	<img src="images/interview1.png" ></div>
+      	<img src="images/interview1.png" :data-id="item.id" :data-num="0" @click="orderUpdate"></div>
     </div>
   </div>
 </div>
@@ -131,6 +131,8 @@ a{color:#fff;}
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
+                   buttonClick:false,
+				isLoadAll:false
 
             }
 
@@ -145,6 +147,21 @@ a{color:#fff;}
         },
 
         methods:{
+
+
+
+        	handleScroll(){
+
+				var wScrollY = window.scrollY; // 当前滚动条位置  
+			    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）  
+			    var bScrollH = document.body.scrollHeight; // 滚动条总高度      
+			    if ((wScrollY + wInnerH >= bScrollH)&&!this.isLoadAll&&!this.buttonClick) {   
+   					
+   					this.buttonClick = true;
+			        this.paginate.currentPage++;
+					this.getMainData();
+			    }; 
+			},
 
         getMainData(isNew){
           const self = this;
@@ -178,8 +195,10 @@ a{color:#fff;}
             if(res.info.data.length>0){
               self.mainData.push.apply(self.mainData,res.info.data);
             }else{
-              alert('没有更多了')
+              self.isLoadAll=false;
+              alert('没有更多了');
             };
+            self.buttonClick = false;
             console.log(self.mainData)
           };
           window.base.orderGet(postData,callback);
