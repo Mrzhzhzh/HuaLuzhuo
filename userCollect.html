@@ -128,7 +128,11 @@ a{color:#fff;}
         getMainData(){
           const self = this;
           self.mainData = window.base.getStorageArray('collectData')
-          console.log(self.mainData)
+          for(var i=0;i<self.mainData.length;i++){
+             if(self.mainData[i].create_time.indexOf(' ')!= -1){
+                self.mainData[i].create_time=self.mainData[i].create_time.split(' ')[0];
+             }
+           }
         },
 
         intoDetail(art_id) {

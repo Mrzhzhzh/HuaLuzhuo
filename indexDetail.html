@@ -467,6 +467,9 @@ div{
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                         self.mainData = res.info.data[0];
+                        if(self.mainData.create_time.indexOf(' ') != -1){
+                            self.mainData.create_time = self.mainData.create_time.split(' ')[0]
+                        }
                         self.merchantData = res.info.data[0].merchant[0];
                         console.log(self.merchantData)
                         if(window.base.getStorageArray('collectData','id',self.mainData.id)){
