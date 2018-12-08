@@ -196,17 +196,17 @@ a{color:#fff;}
 <div id="app">
 <div class="w750">
     <div class="index_tab flexRowBetween">
-    	<div class="tab_item" :data-num='0' @click="menuClick" :style="num=='0'?'color:#ed7101':''">
+    	<div class="tab_item" style="width:50%;" :data-num='0' @click="menuClick" :style="num=='0'?'color:#ed7101':''">
             已入职
         </div>
 
-        <div class="tab_item" :data-num='1' @click="menuClick" :style="num=='1'?'color:#ed7101':''">
+        <div class="tab_item" style="width:50%;" :data-num='1' @click="menuClick" :style="num=='1'?'color:#ed7101':''">
             已离职
         </div>
         
-        <div class="tab_item" :data-num='2' @click="menuClick" :style="num=='2'?'color:#ed7101':''">
+        <!-- <div class="tab_item" :data-num='2' @click="menuClick" :style="num=='2'?'color:#ed7101':''">
             已悬赏
-        </div>
+        </div> -->
     </div>
     <div class="job" v-for="(item,index) in mainData">
       <div style="display: block;">
@@ -240,29 +240,29 @@ a{color:#fff;}
 		    </div>
 
         <div class="resume_handle flexRowBetween">
-            <div class="handle1">
+           <!--  <div class="handle1">
                 <div class="handle_in flexRowaround">
                     <img src="images/job1.png">
                     <div>距悬赏
                         <text>5</text>天</div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="handle2" style="margin:0. 05rem;">
-                <div class="handle_in flexRowaround">
+            <div class="handle2" style="margin:0. 05rem;width:100%;">
+                <div class="handle_in flexRowCenter">
                     <img src="images/job2.png">
                      	<div style="color:#fff;" v-if="item.order_step=='4'"  @click="orderUpdate" :data-id='item.id' :data-index="index">设为离职</div>
 			          <div style="color:#fff;" v-if="item.order_step=='5'">已离职</div>
 				  
                 </div>
             </div>
-
+<!-- 
             <div class="handle2">
                 <div class="handle_in flexRowaround">
                     <img src="images/job3.png">
                     <div style="color:#fff;">已悬赏</div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
       </div>
