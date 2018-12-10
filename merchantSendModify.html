@@ -91,7 +91,7 @@
       <div class="input_before">
         人数:
       </div>
-      <input  v-model='submitData.stock'></input>
+      <input  v-model='submitData.deadline'></input>
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -232,7 +232,7 @@
                   qualifications:'',
                   experience:'',
                   price:'',
-                  stock:'',
+                  stock:9999,
                   age:'',
                   content:'',
                   passage_array:[],
@@ -244,6 +244,7 @@
                   distributionEntryTwo:'',
                   lat:localStorage.getItem('lat'),
                   lng:localStorage.getItem('lng'),
+                  deadline:''
                 },
                 
                 paginate: {
