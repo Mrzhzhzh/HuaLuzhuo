@@ -585,7 +585,7 @@ div{
             },        
 
 
-            addDistri(parent_no){
+			addDistri(parent_no){
                 const self = this;
                 var postData = {};
                 postData.token = localStorage.getItem('user_token'),
@@ -606,7 +606,18 @@ div{
                         type:2,
                         thirdapp_id:2
                       }
-                    }
+                    },
+                    {
+                      tableName:'FlowLog',
+                      FuncName:'add',
+                      data:{
+                        count:-self.mainData.distributionOne,
+                        trade_info:'一级转发奖励',
+                        user_no:self.mainData.user_no,
+                        type:2,
+                        thirdapp_id:2
+                      }
+                    },
                     
                 ];
                 if(parent_no){
@@ -621,7 +632,18 @@ div{
                             type:2,
                             thirdapp_id:2
                           }
-                        }
+                        },
+                        {
+                          tableName:'FlowLog',
+                          FuncName:'add',
+                          data:{
+                            count:-self.mainData.distributionTwo,
+                            trade_info:'二级转发奖励',
+                            user_no:self.mainData.user_no,
+                            type:2,
+                            thirdapp_id:2
+                          }
+                        },
                     )
                 };
                 

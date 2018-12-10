@@ -455,7 +455,18 @@ a{color:#fff;}
                 type:2,
                 thirdapp_id:2
               }  
-            },       
+            },
+            {
+              tableName:'FlowLog',
+              FuncName:'add',
+              data:{
+                count:-self.productData.distributionEntry,
+                trade_info:'入职奖励',
+                user_no:localStorage.getItem('merchant_token'),
+                type:2,
+                thirdapp_id:2
+              }  
+            },        
           );
           console.log('userInfoUpdate',postData);
           console.log('userInfoUpdate',self.distributionData);
@@ -472,6 +483,17 @@ a{color:#fff;}
                   type:2,
                   thirdapp_id:2
                 }  
+              }, 
+              {
+                tableName:'FlowLog',
+                FuncName:'add',
+                data:{
+                  count:-self.productData.distributionEntryOne,
+                  trade_info:'下级入职奖励',
+                  user_no:localStorage.getItem('merchant_token'),
+                  type:2,
+                  thirdapp_id:2
+                }  
               },       
             );
 
@@ -484,6 +506,17 @@ a{color:#fff;}
                     count:self.productData.distributionEntryTwo,
                     trade_info:'下级入职奖励',
                     user_no:self.distributionData.info.data[0].distri[0].parent_no,
+                    type:2,
+                    thirdapp_id:2
+                  }  
+                },
+                {
+                  tableName:'FlowLog',
+                  FuncName:'add',
+                  data:{
+                    count:-self.productData.distributionEntryTwo,
+                    trade_info:'下级入职奖励',
+                    user_no:localStorage.getItem('merchant_token'),
                     type:2,
                     thirdapp_id:2
                   }  
