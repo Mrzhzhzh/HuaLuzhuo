@@ -59,6 +59,23 @@
 .bank_card{
   height: 1.8rem;
 }
+.upload{
+  width:100%;
+  height:2.45rem;
+}
+.uplode_item{
+  width:50%;
+  height:2.45rem;
+  text-align:center;
+}
+.uplode_item img{
+  height:2.45rem;
+  width:3.28rem;
+  margin:0 auto;
+}
+.sumTxt{
+  font-weight:normal;
+}
 a{color:#fff;}
 </style>
 <div id="app">
@@ -82,13 +99,32 @@ a{color:#fff;}
         </div>
         <input placeholder="请输入开户行" v-model="submitData.bank"></input>
     </div>
-   
 </div>
-<div class="confirm_bind">
-   <div   v-on:click="submit"> 确认绑定</div>
+<div class="w710">
+    <div class="upload" style="margin-top:0.4rem;">
+      <p style="margin-bottom:0.24rem;">上传身份证正反两面</p>
+      <div class="upload_box">
+        <div class="upload_item">
+          <img src="images/upload.png"/>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="confirm_bind">
+     <div   v-on:click="submit" style="color:#fff;"> 确认绑定</div>
+  </div>
 </div>
 </div>
-</div>
+<style>
+  .upload_item{
+    width:3.28rem;
+    height:2.35rem;
+  }
+  .upload_item img{
+    height:100%;
+    width:100%;
+  }
+</style>
 <script type="text/javascript">
             
     var app = new Vue({
