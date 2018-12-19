@@ -305,7 +305,7 @@ div{
                             <div class="sort">
                                 <div class="company_introuce">
                                     <div class="company_name flex">
-                                        <div class="sort_items font30 color9">人数:{{mainData.stock}}人
+                                        <div class="sort_items font30 color9">人数:{{mainData.deadline}}人
                                         </div>
                                         <div class="sort_items font30 color9">年龄:
                                             {{mainData.age}}
@@ -329,7 +329,7 @@ div{
 
                             <div class="hongbao">
                                 <img src="images/hongbao.png" />
-                                <div class="hongbao_money">¥300</div>
+                                <div class="hongbao_money">¥{{mainData.distributionEntry}}</div>
                             </div>
 
                         </div>
@@ -393,7 +393,7 @@ div{
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<script type="text/babel">
             
     var app = new Vue({
         el: '#app',
@@ -752,7 +752,7 @@ div{
         }
     });            
 </script>
-<script type="text/javascript">
+<script type="text/babel">
   function share(){
     $("#mask1").hide();
     $("#mask2").toggle();
