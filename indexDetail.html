@@ -222,10 +222,10 @@ div{
     width:100%;
     height:100%;
     background:rgba(0,0,0,0.5);
-    position:fixed;
+    position:absolute;
     top:0;
     left:0;
-    z-index:99;
+    z-index:999;
     overflow:hidden;
 }
 .mask_cont{
@@ -285,6 +285,23 @@ div{
 .mask{
     display: none;
 }
+ .qrcorde{
+            position: absolute;
+            top:35%;
+            left:0;
+            width:100%;
+            height:100%;
+        }
+        .qrcorde_cont{
+            width:100%;
+            height:100%;
+            text-align:center;
+        }
+        .qrcorde_cont img{
+            width:3rem;
+            height:3rem;
+            margin:0 auto;
+        }
 </style>
 <div id ="app">
     <div class="w750">
@@ -379,11 +396,20 @@ div{
         <div class="map">
             <div id="allmap"></div>
         </div>
-
+        <div class="mask" :style="qrcorde?'display:block':'display:none'">
+            <div class="qrcorde">
+                <div class="qrcorde_cont">
+                    <img :src="QrData.url"/>
+                </div>
+            </div>
+        </div>
         <div style="height:1.3rem;width:100%;"></div>
         <div class="footer flexRowBetween font34">
             <div class="footer1" @click="collect">
                 <img :src="isCollect?'images/user_icon3_a.png':'images/collect.png'"/>
+            </div>
+            <div class="footer1" @click="qrcorde_click">
+                <img src="images/user_icon3_a.png"/>
             </div>
             <div class="footer1 flex">
                 <a href="tel://merchantData.phone" style="width:0.6rem;height:0.6rem;margin:0 auto;"><img src="images/phone.png"/></a>
@@ -422,7 +448,8 @@ div{
                 linkPage:'',
                 isCollect:false,
                 merchantData:{},
-                buttonCanClick:true
+                buttonCanClick:true,
+                qrcorde:false,
             }
 
         },
@@ -441,10 +468,10 @@ div{
         },
 
         methods:{
-
-            
-
-
+            qrcorde_click(){
+            const self = this;
+            self.qrcorde = !self.qrcorde;
+        },
 
             productGet(){
                 const self = this;
@@ -555,7 +582,8 @@ div{
                 postData.ext = 'png';
                 const callback = (res)=>{
                   console.log(res);
-                  self.QrData = res;
+                  self.QrData = res.info;
+                  console.log(9990,self.QrData)
                 };
                 window.base.getQrCommonCode(postData,callback);
             },
@@ -766,19 +794,6 @@ div{
            
         }
     });            
-</script>
-<script type="text/babel">
-  function share(){
-    $("#mask1").hide();
-    $("#mask2").toggle();
-  }
-  function sign(){
-    $("#mask2").hide();
-    $("#mask1").toggle();
-  }
-  function hide(){
-    $(".mask").hide();
-  }
 </script>
 </body>
 </html>

@@ -28,22 +28,14 @@
 	height:1.20rem;
 	margin:0 auto;
 }
-#login{
-	width:84%;
-	margin:0 auto;
-}
 .login_input{
-	height:0.8rem;
+	height:1rem;
 	border-bottom:solid 1px #e0e0e0;
 }
 .input_img{
 	width:17.5%;
 	padding-left:2%;
-}
-.input_img img{
-	width:0.32rem;
-	height:0.48rem;
-	
+	font-size:0.3rem;
 }
 .input_in{
 	width:80.5%;
@@ -98,8 +90,8 @@
     left: 44%;
 }
 .add img{
-    width:0.8rem;
-    height: 0.8rem;
+    width:1.8rem;
+    height: 1.8rem;
     margin:0 auto;
 }
 </style>
@@ -108,16 +100,16 @@
 		<div class="w100">
 			<div id="login">
 			    <div class="login_input flexRowBetween">
-			        <div class="input_img" style="display: inline;">
-			            企业名称
+			        <div class="input_img color6" style="display: inline;">
+			            企业名称:
 			        </div>
 			        <div class="input_in">
 			            <input placeholder="请输入企业名称" v-model='submitData.name'></input>
 			        </div>
 			    </div>
 			    <div class="login_input flexRowBetween">
-			        <div class="input_img" style="display: inline;">
-			            密码
+			        <div class="input_img color6" style="display: inline;">
+			            密  码:
 			        </div>
 			        <div class="input_in">
 			            <input placeholder="请输入密码" v-model='submitData.password'></input>
