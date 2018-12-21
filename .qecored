@@ -61,22 +61,34 @@
 }
 .upload{
   width:100%;
-  height:3.65rem;
+  height:2.45rem;
 }
-
+.uplode_item{
+  width:50%;
+  height:2.45rem;
+  text-align:center;
+}
+.uplode_item img{
+  height:2.45rem;
+  width:3.28rem;
+  margin:0 auto;
+}
+.sumTxt{
+  font-weight:normal;
+}
 .upload_btn{
-    width:40%;
-    height:3.2rem;
+    width:20%;
+    height:1.2rem;
     background: #f2f2f2;
     text-align: center;
-    line-height: 3.2rem;
+    line-height: 1.2rem;
     color: #7dc2f5;
     font-size: 0.4rem;
     position: relative;
 }
 .qecored{
     width:40%;
-    height: 3.2rem;
+    height: 1.2rem;
 }
 .qecored img{
     width: 100%;
