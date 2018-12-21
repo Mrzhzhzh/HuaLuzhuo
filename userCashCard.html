@@ -76,6 +76,39 @@
 .sumTxt{
   font-weight:normal;
 }
+.upload_btn{
+    width:20%;
+    height:1.2rem;
+    background: #f2f2f2;
+    text-align: center;
+    line-height: 1.2rem;
+    color: #7dc2f5;
+    font-size: 0.4rem;
+    position: relative;
+}
+.qecored{
+    width:20%;
+    height: 1.2rem;
+}
+.qecored img{
+    width: 100%;
+    height: 100%;
+}
+.upload_btn input{
+    width:100%;
+    height: 100%;
+}
+.add{
+    
+    position: absolute;
+    bottom: -0.4rem;
+    left: 44%;
+}
+.add img{
+    width:0.8rem;
+    height: 0.8rem;
+    margin:0 auto;
+}
 a{color:#fff;}
 </style>
 <div id="app">
@@ -100,19 +133,32 @@ a{color:#fff;}
         <input placeholder="请输入开户行" v-model="submitData.bank"></input>
     </div>
 </div>
+
+
 <div class="w710">
     <div class="upload" style="margin-top:0.4rem;">
       <p style="margin-bottom:0.24rem;">上传身份证正反两面</p>
-      <div class="upload_box">
-        <div class="upload_item">
-          <img src="images/upload.png"/>
+
+      		<div class="qecored" v-for="item in submitData.mainImg">
+				<img :src="item.url" />
+			</div>
+
+			<div class="upload_btn" @change="upload" v-if="submitData.mainImg.length<2">+
+				<input  type="file" style="opacity: 0;position: absolute;left:0;top:0;z-index: 1;" accept="image/*" multiple v-if="isIos" >  
+				</input>
+
+				<input  type="file" style="opacity: 0;position: absolute;left:0;top:0;z-index: 1;" accept="image/*" 
+				multiple v-else ></input>
+			</div>
         </div>
       </div>
     </div>
 </div>
-  <div class="confirm_bind">
-     <div   v-on:click="submit" style="color:#fff;"> 确认绑定</div>
-  </div>
+
+<div class="confirm_bind">
+ 	<div  @click="submit"  style="color:#fff;"> 确认绑定</div>
+</div>
+
 </div>
 </div>
 <style>
@@ -136,7 +182,8 @@ a{color:#fff;}
                 submitData:{
                   bank:'',
                   bankNum:'',
-                  name:''
+                  name:'',
+                  mainImg:[]
                 },
                 
                 paginate: {
@@ -153,7 +200,7 @@ a{color:#fff;}
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-
+                isIos:false
             }
 
         },
@@ -171,6 +218,8 @@ a{color:#fff;}
 
           userGet(){
             const self = this;
+            var ua = navigator.userAgent.toLowerCase();
+			self.isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
             const postData = {};
             postData.token =localStorage.getItem('user_token');
             const callback = (res)=>{
@@ -179,10 +228,27 @@ a{color:#fff;}
                 self.submitData.bank = self.mainData.info.bank;
                 self.submitData.name = self.mainData.info.name; 
                 self.submitData.bankNum = self.mainData.info.bankNum; 
+                self.submitData.mainImg = self.mainData.info.mainImg; 
               }
             };
              window.base.userGet(postData,callback);
           },
+
+          	upload(e){
+				var self = this;
+				var file = e.target.files[0];
+				console.log(e)
+				var param = new FormData();
+				param.append('file',file,file.name);
+				param.append('thirdapp_id',2);
+				param.append('token',localStorage.getItem('user_token'));
+				var callback = function (res) {
+					if(res.solely_code==100000&&res.info&&res.info.url){ 
+          				self.submitData.mainImg.push({url:res.info.url})
+          			}
+				};
+				var res = window.base.upLoadImg(param,callback);
+			},
 
           userInfoUpdate(){
             const self = this;
@@ -205,8 +271,10 @@ a{color:#fff;}
           
           submit(){
             const self = this;
+            console.log(999)
             var phone = self.submitData.phone;
             const pass = window.base.checkComplete(self.submitData);
+            console.log('666',pass)
             if(pass){
                
                 self.userInfoUpdate();       

@@ -122,6 +122,18 @@ window.base={
         this.getData(allParams);
     },
 
+    getQrCommonCode(param,callback){
+        var allParams ={
+            url:'Base/Qr/CommonQrGet',
+            type:'post',
+            data:param,
+            sCallback: function(data) {
+                callback && callback(data);
+            }
+        };
+        this.getData(allParams);
+    },
+
     pay:function(param,callback){
         var allParams ={
             url:'Base/Pay/pay',
@@ -182,24 +194,34 @@ window.base={
     },
 
     upLoadImg:function(param,callback) {
-    
+        var that=this;
         $.ajax({ // $.post，告辞
             type: 'post',
             contentType: false, // 关关关！必须得 false
                                 // 这个不关会扔一个默认值 application/x-www-form-urlencoded 过去，后端拿不到数据的！
                                 // 而且你甚至不能传个字符串 'multipart/form-data'，后端一样拿不到数据！
             processData: false, // 关关关！重点
-            url: 'http://fuxian.yisuiyanghuoguo.com/api/fuxian/public/index.php/api/v1/Base/FtpImage/uploadExcluedeToken',
+            url: 'http://www.walhr.com/api/public/index.php/api/v1/Base/FtpImage/upload',
             data: param,
             success:function(res){
-                callback && callback(res);
+
+                if(res.solely_code==201000){
+                    var loca = window.location;
+                    window.location.href = loca.origin + loca.pathname;
+                }else if(res.solely_code==200000){
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('user_no');
+                    that.getUserToken();
+                }else{
+                    callback && callback(res);
+                };
+
             },
             error:function(res){
                 callback && callback(res);
             }
         });
-
-    }, 
+    },
 
     loginUp:function(param,callback) {
     
@@ -247,6 +269,20 @@ window.base={
         };
         this.getData(allParams)
     }, 
+
+    register:function(param,callback) {
+  
+        var allParams = {
+            url:'Project/Jzyz/register',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        this.getData(allParams)
+    }, 
+
 
     distriGet:function(param,callback) {
   

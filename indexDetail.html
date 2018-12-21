@@ -433,7 +433,7 @@ div{
             var callback = (res)=>{
                 this.productGet();
                 this.wxJsSdk();
-                
+                this.getQrData()
                 
             };
             window.base.getUserToken(callback);
@@ -545,6 +545,21 @@ div{
                 }
               
             },
+
+            getQrData(){
+                const self = this;
+                const postData = {};
+                postData.token = localStorage.getItem('user_token');
+                postData.param = window.location.href;
+                postData.output = 'url';
+                postData.ext = 'png';
+                const callback = (res)=>{
+                  console.log(res);
+                  self.QrData = res;
+                };
+                window.base.getQrCommonCode(postData,callback);
+            },
+
 
 
             getDistri(){

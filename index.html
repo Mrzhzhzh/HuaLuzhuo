@@ -254,7 +254,7 @@ a{
         </div>
     </div>
 </div>
-
+<div id="sina_ip_info"></div>
 <div class="solely" style="font-size:0.20rem;color:#666;text-align:center;">
     技术支持:西安纯粹科技有限公司
 </div>
@@ -427,6 +427,15 @@ a{
                                 self.longitude = longitude;
                             
                                 self.productGet(); 
+
+                                //wx.openLocation({
+									//latitude : res.latitude, // 纬度，浮点数，范围为90 ~ -90
+									//longitude : res.longitude, // 经度，浮点数，范围为180 ~ -180。
+									//name : '我的位置', // 位置名
+									//address : '329创业者社区', // 地址详情说明
+									//scale : 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
+									//infoUrl : 'http://www.gongjuji.net' // 在查看位置界面底部显示的超链接,可点击跳转（测试好像不可用）
+								//});
                             },    
                             cancel : function(res) {    
                                 alert("未能获取地理位置");    
@@ -592,6 +601,26 @@ a{
 
 });           
 </script>
-
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script type="text/javascript">
+    var uip = returnCitySN["cip"].toString();
+    $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' + uip, function (_result) {
+        var ipData = ""; //初始化保存内容变量
+        if (remote_ip_info.ret == '1') {
+            ipData += "IP 详细信息：<br>";
+            ipData += "IP：" + uip + "<br>";
+            ipData += "国家：" + remote_ip_info.country + "<br>";
+            ipData += "省份：" + remote_ip_info.province + "<br>";
+            ipData += "城市：" + remote_ip_info.city + "<br>";
+            ipData += "区：" + remote_ip_info.district + "<br>";
+            ipData += "ISP：" + remote_ip_info.isp + "<br>";
+            ipData += "类型：" + remote_ip_info.type + "<br>";
+            ipData += "其他：" + remote_ip_info.desc + "<br>";
+            $("#sina_ip_info").html(ipData); //显示处理后的数据
+        } else {
+            alert('错误', '没有找到匹配的 IP 地址信息！');
+        }
+    });
+	</script>
 </body>
 </html>

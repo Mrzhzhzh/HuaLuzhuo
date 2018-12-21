@@ -113,8 +113,8 @@
             return {
 
                 submitData:{
-                   login_name:'测试商户',
-                   password:'chuncuiwangluo'
+                   login_name:'',
+                   password:''
                 },
                 
                 paginate: {
@@ -147,20 +147,20 @@
                 	password:self.submitData.password
                 }
                 if(window.base.checkComplete(self.submitData)){
-                   
+                    const callback = (res)=>{
+	                  if(res.solely_code==100000){
+	              		localStorage.setItem('merchant_token',res.token);
+	              		localStorage.setItem('merchant_no',res.info.user_no);
+	                    window.location.href='./merchant.html'
+	                  }else{
+	                    alert(res.msg)
+	                  }
+	                }
+	                window.base.login(postData,callback);
                 }else{
                     alert('请输入账号密码','none')
                 };
-                const callback = (res)=>{
-                  if(res.solely_code==100000){
-              		localStorage.setItem('merchant_token',res.token);
-              		localStorage.setItem('merchant_no',res.info.user_no);
-                    window.location.href='./merchant.html'
-                  }else{
-                    alert(res.msg)
-                  }
-                }
-                window.base.login(postData,callback);
+
             },  
         }
     });

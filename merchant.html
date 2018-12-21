@@ -57,7 +57,7 @@
                 <div class="banner_top">
                     <a href="userMessage.html?title=商户消息"><img src="images/tixing.png"></a>
                 </div>
-                <div style="font-size:.32rem;color:#fff;"><a href="login.html">退出</a></div>
+                <div style="font-size:.32rem;color:#fff;" v-on:click="loginOff">退出</div>
             </div>
             <div class="banner_bottom flexRowBetween">
                 <div class="user_left">
@@ -192,6 +192,12 @@
                 }
                 window.base.userGet(postData,callback);
             },  
+
+           	loginOff(){
+           		var self = this;
+           		localStorage.removeItem('merchant_token'),
+           		window.location.href = "./login.html";
+           	},
 
             
 
