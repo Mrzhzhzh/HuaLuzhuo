@@ -471,14 +471,7 @@ div{
         },
 
         methods:{
-            qrcorde_click(){
-                const self = this;
-                self.qrcorde = !self.qrcorde;
-            },
-            mask(){
-                const self = this;
-                self.qrcorde = false;
-            },
+            
             productGet(){
                 const self = this;
                 const postData = {
@@ -796,7 +789,14 @@ div{
                 var art_id = window.base.getDataSet(e).id;
                 window.location.href = "./indexDetail.html?id=" + art_id;
             },   
-
+            qrcorde_click(){
+                const self = this;
+                self.qrcorde = !self.qrcorde;
+            },
+            mask(){
+                const self = this;
+                self.qrcorde = false;
+            },
            
         }
     });            
