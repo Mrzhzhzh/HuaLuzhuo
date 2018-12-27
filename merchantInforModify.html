@@ -54,6 +54,7 @@
   height:1.5rem;
 }
 </style>
+
 <div id="app">
 	<div class="w750">
 	    <a  href="merchantMap.html" class="p40">
@@ -70,13 +71,17 @@
 	      </div>
 	    </a>
   	</div>
+
   	<div class="w750">
+
     	<div class="p40">
+
 		    <div class="sum_txt">
 		      <div class="sumTxt">基础信息</div>
 		    </div>
 
 		    <div class="phone_infor" >
+
 			    <div class="bank_card flexRowBetween">
 			        <div class="input_before">
 			          公司名称:
@@ -86,6 +91,7 @@
 			          <img src="images/pencil.png">
 			        </div>
 			    </div>
+
 			    <div class="bank_card flexRowBetween">
 			        <div class="input_before">
 			          联系人:
@@ -95,6 +101,7 @@
 			          <img src="images/pencil.png">
 			        </div>
 			    </div>
+
 			    <div class="bank_card flexRowBetween">
 			        <div class="input_before">
 			          手机号:
@@ -104,7 +111,9 @@
 			            <img src="images/pencil.png">
 			        </div>
 			    </div>
-		     </div>
+
+
+
 			    <div class="bank_card flexRowBetween">
 			        <div class="input_before" style="width:25%;">
 			          联系人职位:
@@ -116,47 +125,53 @@
 			          	<img src="images/pencil.png">
 			        </div>
 			    </div>
-          <div class="phone_infor" >
-            <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                企业规模:
-              </div>
-            <input v-model='submitData.level'></input>
-            <div class="pencil">
-                <img src="images/pencil.png">
-            </div>
-        </div>
-        <div class="phone_infor" >
-          <div class="bank_card flexRowBetween">
-              <div class="input_before">
-                地址:
-              </div>
-                <input v-model='submitData.address'></input>
-              <div class="pencil">
-                <img src="images/pencil.png">
-              </div>
-          </div>
-         </div>
-		     </div>
+
+  
+	            <div class="bank_card flexRowBetween">
+		            <div class="input_before">
+		               企业规模:
+		            </div>
+		            <input v-model='submitData.level'></input>
+		            <div class="pencil">
+		                <img src="images/pencil.png">
+		            </div>
+	        	</div>
+
+    
+		        <div class="bank_card flexRowBetween">
+		            <div class="input_before">
+		                地址:
+		            </div>
+		            <input v-model='submitData.address'></input>
+		            <div class="pencil">
+		                <img src="images/pencil.png">
+		            </div>
+		        </div>
+        
+			</div>
 
 		    
 
 		    <div class="sum_txt" style="border:none;">
 		        <div class="sumTxt">公司简介</div>
 		    </div>
+
 		    <div class="intro  flexRowBetween">
 		        <div class="intro_edit">
 		          <img src="images/pencil1.png">
 		        </div>
 		        <textarea v-model='submitData.date'> </textarea>
 		    </div>
+
     	</div>
   	</div>
+
   	<div style="height:1.00rem;width:100%;">
 		<div class="confirm_bind">
-			<div v-on:click="submit" style="color:#fff;">确认修改</a>
+			<div v-on:click="submit" style="color:#fff;">确认修改</div>
 		</div>
 	</div>
+
 </div>
 
 <script type="text/javascript">
@@ -224,7 +239,7 @@
                   self.submitData.address = self.mainData.info.address;
                   self.submitData.level = self.mainData.info.level;
                   self.submitData.name = self.mainData.info.name;
-                
+                self.submitData.date = self.mainData.info.date;
                 }
               };
                window.base.userGet(postData,callback);
