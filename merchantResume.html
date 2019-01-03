@@ -389,7 +389,100 @@ a{color:#fff;}
           	passage1:localStorage.getItem('merchant_no'),
           	order_step:4
           }
-        
+          postData.saveAfter=[];
+          postData.saveAfter.push(
+          	{
+              tableName:'OrderItem',
+              FuncName:'update',
+              data:{
+                isremark:1
+              },
+              searchItem:{
+              	order_no:self.mainData[index].order_no
+          	  }  
+            },
+            {
+              tableName:'FlowLog',
+              FuncName:'add',
+              data:{
+                count:self.productData.distributionEntry,
+                trade_info:'入职奖励',
+                user_no:self.mainData[index].user_no,
+                type:2,
+                thirdapp_id:2
+              }  
+            },
+            {
+              tableName:'FlowLog',
+              FuncName:'add',
+              data:{
+                count:-self.productData.distributionEntry,
+                trade_info:'入职奖励',
+                user_no:localStorage.getItem('merchant_no'),
+                type:2,
+                thirdapp_id:2
+              }  
+            },        
+          );
+          console.log('userInfoUpdate',postData);
+          console.log('userInfoUpdate',self.distributionData);
+          if(self.distributionData.info.data.length>0){
+
+            postData.saveAfter.push(
+              {
+                tableName:'FlowLog',
+                FuncName:'add',
+                data:{
+                  count:self.productData.distributionEntryOne,
+                  trade_info:'下级入职奖励',
+                  user_no:self.distributionData.info.data[0].parent_no,
+                  type:2,
+                  thirdapp_id:2
+                }  
+              }, 
+              {
+                tableName:'FlowLog',
+                FuncName:'add',
+                data:{
+                  count:-self.productData.distributionEntryOne,
+                  trade_info:'下级入职奖励',
+                  user_no:localStorage.getItem('merchant_no'),
+                  type:2,
+                  thirdapp_id:2
+                }  
+              },       
+            );
+
+            if(self.distributionData.info.data[0].distri){
+              postData.saveAfter.push(
+                {
+                  tableName:'FlowLog',
+                  FuncName:'add',
+                  data:{
+                    count:self.productData.distributionEntryTwo,
+                    trade_info:'下级入职奖励',
+                    user_no:self.distributionData.info.data[0].distri[0].parent_no,
+                    type:2,
+                    thirdapp_id:2
+                  }  
+                },
+                {
+                  tableName:'FlowLog',
+                  FuncName:'add',
+                  data:{
+                    count:-self.productData.distributionEntryTwo,
+                    trade_info:'下级入职奖励',
+                    user_no:localStorage.getItem('merchant_no'),
+                    type:2,
+                    thirdapp_id:2
+                  }  
+                },
+              )
+            };
+            
+          };
+          console.log('distributionData',postData);
+        console.log('self.mainData[index].user_no',self.mainData[index].user_no)
           console.log('orderUpdate',postData)
           const callback  = (res)=>{
           	if(res.solely_code==100000){
@@ -398,8 +491,6 @@ a{color:#fff;}
           	}else{
           		alert('网络故障')
           	} 
-          	
-          	self.userInfoUpdate();
           };
           window.base.orderUpdate(postData,callback);
         },
@@ -436,13 +527,14 @@ a{color:#fff;}
           window.base.distriGet(postData,callback);
         },  
 
-        userInfoUpdate(){
+        userInfoUpdate(index){
           const self = this;
           const postData = {};
           postData.token = localStorage.getItem('merchant_token'); 
           postData.data = {
             update_time:new Date().getTime(),
           };
+
           postData.saveAfter=[];
           postData.saveAfter.push(
             {
@@ -451,7 +543,7 @@ a{color:#fff;}
               data:{
                 count:self.productData.distributionEntry,
                 trade_info:'入职奖励',
-                user_no:self.mainData[0].user_no,
+                user_no:self.mainData[index].user_no,
                 type:2,
                 thirdapp_id:2
               }  
@@ -462,7 +554,7 @@ a{color:#fff;}
               data:{
                 count:-self.productData.distributionEntry,
                 trade_info:'入职奖励',
-                user_no:localStorage.getItem('merchant_token'),
+                user_no:localStorage.getItem('merchant_no'),
                 type:2,
                 thirdapp_id:2
               }  
@@ -490,7 +582,7 @@ a{color:#fff;}
                 data:{
                   count:-self.productData.distributionEntryOne,
                   trade_info:'下级入职奖励',
-                  user_no:localStorage.getItem('merchant_token'),
+                  user_no:localStorage.getItem('merchant_no'),
                   type:2,
                   thirdapp_id:2
                 }  
@@ -516,7 +608,7 @@ a{color:#fff;}
                   data:{
                     count:-self.productData.distributionEntryTwo,
                     trade_info:'下级入职奖励',
-                    user_no:localStorage.getItem('merchant_token'),
+                    user_no:localStorage.getItem('merchant_no'),
                     type:2,
                     thirdapp_id:2
                   }  

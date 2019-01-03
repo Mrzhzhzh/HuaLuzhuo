@@ -339,6 +339,20 @@ a{color:#fff;}
                 const postData = {}
                 postData.token = localStorage.getItem('merchant_token');
                 postData.searchItem = window.base.cloneForm(self.searchItem);
+                postData.getBefore={
+		            order:{
+		              tableName:'OrderItem',
+		              searchItem:{
+		                product_id:['in',[window.base.GetRequest().id]]
+		              },
+		              fixSearchItem:{
+		                status:1
+		              },
+		              middleKey:'order_no',
+		              key:'order_no',
+		              condition:'in',
+		            } 
+	          	};
                 postData.getAfter={
 		            userInfo:{
 		              tableName:'UserInfo',
@@ -350,8 +364,8 @@ a{color:#fff;}
 		              },
 		            },
 		            user:{
-		              tableName:'UserInfo',
-		              middleKey:'passage1',
+		              tableName:'User',
+		              middleKey:'user_no',
 		              key:'user_no',
 		              condition:'=',
 		              searchItem:{

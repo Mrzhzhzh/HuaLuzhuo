@@ -104,7 +104,7 @@
     </div>
     <div class="user_item">
       <a href="userNext.html">
-       <div class="item_top font32">{{numOne&&numTwo?numOne+numTwo:'0'}}</div>
+       <div class="item_top font32">{{numOne+numTwo}}</div>
        <div class="item_bottom font34">我的下级</div>
       </a>
     </div>
@@ -353,13 +353,19 @@
                       	console.log(self.idData)
                     }
                     self.numOne = self.distriDataOne.length;
-                  self.distriGetTwo();
+                    //if (true) {
+                    //	self.distriGetTwo();
+                    //}else{
+                    //	self.numTwo = 0;
+                    //}
+                  
                 }
                 window.base.distriGet(postData,callback);
             },  
 
             distriGetTwo(){
                 const self = this;
+                console.log('self.idData',self.idData);
                 const postData = {
                 	token:localStorage.getItem('user_token'),
                     searchItem:{

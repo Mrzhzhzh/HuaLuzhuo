@@ -19,7 +19,7 @@ window.base={
                     localStorage.setItem('user_token',res.token);
                     localStorage.setItem('user_no',res.info.user_no);
                     
-                    this.setStorageArray('user_info',res.info,'id',999,type='unshift');
+                    this.setStorageArray('user_info',res.info,'id',999,'unshift');
                     callback&&callback();
                 }else{
                     alert('获取token失败')

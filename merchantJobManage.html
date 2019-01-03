@@ -86,7 +86,7 @@ a{color:#fff;}
           </div>
           <div class="user_sort font38">
               <a class="user_item flexRowBetween" :data-id="item.id"  @click="intoDetail">
-                  <div style="width:98%;">
+                  <div style="width:98%;" :data-id="item.id"  @click="intoDetail">
                       <div class="item_bottom" :data-id="item.id"  @click="intoDetail">收到报名
                           <span class="color">({{item.orderItem.totalCount}})</span>
                       </div>
@@ -95,10 +95,10 @@ a{color:#fff;}
                       <div style="width:1px;height:100%;border-left:dashed 1px #ed7101;"></div>
                   </div>
               </a>
-              <a class="user_item flexRowBetween" href="merchantJobNow.html">
-                  <div style="width:98%;">
-                      <div class="item_bottom">已入职
-                          <span class="color"></span>
+              <a class="user_item flexRowBetween" :data-id="item.id"  @click="intoDetailModify">
+                  <div style="width:98%;" :data-id="item.id"  @click="intoDetailModify">
+                      <div class="item_bottom" :data-id="item.id"  @click="intoDetailModify">已入职
+                          <span class="color">({{item.orderItemRu.length}})</span>
                       </div>
                   </div>
               </a>
@@ -218,7 +218,19 @@ a{color:#fff;}
                       	]
                   	  }
 
-                  }
+                  },
+                  orderItemRu:{
+                  	  tableName:'OrderItem',
+                      middleKey:'id',
+                      key:'product_id',
+                      searchItem:{
+                          status:1,
+                          isremark:1,
+                      },
+                      condition:'=',
+              
+
+                  },
 
                 }
                 const callback = (res)=>{
@@ -245,10 +257,10 @@ a{color:#fff;}
                 window.location.href = "./merchantResume.html?id=" + art_id;
             },  
 
-            intoDetailModify(id) {
+            intoDetailModify(e) {
                 var self = this;
-                console.log(id)
-               window.location.href = "./merchantJobModify.html?id=" + id;
+                var id = window.base.getDataSet(e).id;
+               window.location.href = "./merchantJobNow.html?id=" + id;
                
             },    
 

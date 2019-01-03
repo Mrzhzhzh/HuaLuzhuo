@@ -97,11 +97,11 @@ a{color:#fff;}
       </div>
     </div>
     <div class="handle">
-      <div class="handle_top" :data-id="item.id" :data-num="0" @click="orderUpdate" >
-        	<img src="images/interview2.png" :data-id="item.id" :data-num="0" @click="orderUpdate" >
+      <div class="handle_top"  @click="orderUpdate(item.id,0)" >
+        <img src="images/interview2.png"  >
       </div>
-      <div class="handle_top handle_bottom" :data-id="item.id" :data-num="1" @click="orderUpdate">
-      	<img src="images/interview1.png" :data-id="item.id" :data-num="0" @click="orderUpdate"></div>
+      <div class="handle_top handle_bottom" @click="orderUpdate(item.id,1)">
+      	<img src="images/interview1.png" ></div>
     </div>
   </div>
 </div>
@@ -212,15 +212,15 @@ a{color:#fff;}
         },   
 
 
-        orderUpdate(e){
+        orderUpdate(id,num){
           const self = this
           console.log(e)
-          var num = window.base.getDataSet(e).num;
+          var num = num;
           const postData = {};
           postData.token = localStorage.getItem('user_token');
           
           postData.searchItem = {	
-            id:window.base.getDataSet(e).id
+            id:id
           };
           if(num=='0'){
           	postData.data = {
