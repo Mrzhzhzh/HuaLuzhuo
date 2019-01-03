@@ -6,7 +6,7 @@
 <meta name="baidu-site-verification" content="z8EeuYl0nS" />
 <meta name="keywords" content="华路卓">
 <meta name="description" content="华路卓">
-<meta name="divport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
 <link href="css/basic.css" rel="stylesheet"/>
 <script src="js/rem.js"></script>
 <script type="text/javascript"  src="js/jquery-2.1.4.min.js"></script>
@@ -30,6 +30,10 @@
 div{
     color:#666;
 }
+.bg1{
+    background:#fff;
+}
+
 .w710{
     align-items:center;
     display:flex;
@@ -156,11 +160,11 @@ div{
 .reward_detail{
     padding:0.20rem 0;
 }
-.reward_detail div{
+/*.reward_detail div{
     font-size:0.3rem;
     color:#666;
     line-height:0.540rem;
-}
+}*/
 .share .share1{
     width:30%;
     height:0.620rem;
@@ -305,6 +309,9 @@ div{
             height:3rem;
             margin:0 auto;
         }
+        .color{
+            color:#ed7101;
+        }
 </style>
 <div id ="app">
     <div class="w750">
@@ -399,14 +406,14 @@ div{
         <div class="map">
             <div id="allmap"></div>
         </div>
-        <div class="mask" :style="qrcorde?'display:block':'display:none'" @click="mask">
+        <div class="mask" :style="qrcorde||is_sign?'display:block':'display:none'" @click="mask">
         </div>
         <div class="qrcorde" :style="qrcorde?'display:block':'display:none'">
             <div class="qrcorde_cont">
                 <img :src="QrData.url?QrData.url:''"/>
             </div>
         </div>
-        <div class="tishi" wx:if="{{is_show}}"  catchtouchmove="true">
+        <div class="tishi" :style="is_sign?'display:block;z-index:999;':'display:none;z-index:-1'">
           <div class="mask_cont" >
             <div class="tishi_cont">
                 <div class="tishi_tltl">预约报名</div>
@@ -436,13 +443,12 @@ div{
             <div class="footer1" @click="qrcorde_click">
                 <img src="images/share.png"/>
             </div>
-            <div class="footer1 bg1 color" @click="">
-                报名预约
-            </div>
             <div class="footer1 flex">
                 <a href="tel://merchantData.phone" style="width:0.6rem;height:0.6rem;margin:0 auto;"><img src="images/phone.png"/></a>
             </div>
-           
+             <div class="footer1 bg1" @click="sign_click" >
+                <div class="color" style="text-align: center;width:100%;">报名预约</div>
+            </div>
             <div class="footer2"  @click="buttonCanClick?submit():''" style="border-left:1px solid #fff">{{checkOrderData.length>0?'已投递':'投递简历'}}</div>
         </div>
     </div>
@@ -478,6 +484,7 @@ div{
                 merchantData:{},
                 buttonCanClick:true,
                 qrcorde:false,
+                is_sign:false,
                 QrData:[]
             }
 
@@ -819,10 +826,17 @@ div{
             qrcorde_click(){
                 const self = this;
                 self.qrcorde = !self.qrcorde;
+                self.is_sign = false;
+            },
+            sign_click(){
+                const self = this;
+                self.is_sign = !self.is_sign;
+                self.qrcorde = false;
             },
             mask(){
                 const self = this;
                 self.qrcorde = false;
+                self.is_sign = false;
             },
            
         }
