@@ -45,6 +45,9 @@
 .reward_money{
   flex-wrap:wrap;
 }
+.welfare{
+  width:25%;
+}
 </style>
 <div id="app">
 
@@ -176,11 +179,13 @@
           <option v-for="c_item in cityData">{{c_item.title}}</option> 
       </select> 
     </div>
-    <div class="p40 bank_card flexRowBetween">
+    <div class="flexRowBetween" style="border-bottom:solid 1px #e0e0e0">
       <div class="input_before">
         福利待遇:
       </div>
-      <div class="welfare font34" v-for="item in submitData.passage_array">{{item}}</div>
+      <div class="welfare_all flex" style="flex-wrap:wrap;width:76%;">
+        <div class="welfare font34" v-for="item in submitData.passage_array">{{item}}</div>
+      </div>
     </div>
 
     <div class="p40">
