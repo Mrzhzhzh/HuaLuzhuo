@@ -350,14 +350,14 @@
                       	for (var i = 0; i < res.info.data.length; i++) {
                       	  self.idData.push(res.info.data[i].child_no)
                       	};
-                      	console.log(self.idData)
+                      	console.log('self.idData',self.idData)
                     }
                     self.numOne = self.distriDataOne.length;
-                    //if (true) {
-                    //	self.distriGetTwo();
-                    //}else{
-                    //	self.numTwo = 0;
-                    //}
+                    if (self.idData&&self.idData.length>0) {
+                    	self.distriGetTwo();
+                    }else{
+                    	self.numTwo = 0;
+                    }
                   
                 }
                 window.base.distriGet(postData,callback);
@@ -365,14 +365,15 @@
 
             distriGetTwo(){
                 const self = this;
+
                 console.log('self.idData',self.idData);
+             
                 const postData = {
                 	token:localStorage.getItem('user_token'),
                     searchItem:{
                     	thirdapp_id:2,
                     	parent_no:['in',self.idData]
                     }
-                    
                 };
                 postData.getAfter = {
                 	userInfo:{
@@ -385,6 +386,8 @@
                 		condition:'='
                 	}
                 };
+
+                console.log('postData',postData)
                 const callback = (res)=>{
                     if(res.info.data.length>0){
                     	self.distriDataTwo.push.apply(self.distriDataTwo,res.info.data);	
