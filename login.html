@@ -103,7 +103,7 @@
 			</div>
 			<p  class="flexRowCenter" style="text-align:center;height:1rem;line-height:1rem;">
 				<span>没有账号?</span>
-				<a href="register.html" class="color font30" style="display:inline-block;height:1rem;line-height:1rem;width:30%;">立即注册</a></p>
+				<a @click="intoCashCard" class="color font30" style="display:inline-block;height:1rem;line-height:1rem;width:30%;">立即注册</a></p>
 		</div>
 	</div>
 </div>
@@ -164,6 +164,11 @@
                 };
 
             },  
+
+            intoCashCard(){
+	        const self = this;
+	        window.location.href = 'register.html?token='+localStorage.getItem('user_token');
+	        },
         }
     });
             

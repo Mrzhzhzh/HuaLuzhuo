@@ -26,16 +26,17 @@
       margin:0 auto;
       margin-left:6%;
     }
-    .con_btn{
-      width:1.3rem;
+    .submit_btn{
+      width:1.6rem;
       height:0.6rem;
       text-align: center;
       line-height: 0.6rem;
       border-radius:0.1rem;
       background: #ed7101;
       color:#fff; 
-      margin-top:0.2rem;
+      margin-top:0.4rem;
       margin-left:40%;
+      border:0;
     }
   </style>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=W0dj26r0e4nDYKmCvXNBWR0Edcemccau"></script>
@@ -46,7 +47,7 @@
     <div id="allmap"></div>
     <input id="searchContent" placeholder="输入关键字查询" style="margin-top: 20px"></input>
     <div><input id="address" placeholder="地址详情" style="margin-top: 20px"></input></div>
-    <a class="con_btn"  href="javascript :;" onClick="javascript :history.back(-1);">确定</a>
+    <input type='button' class="submit_btn bg" name='submit' onclick='javascript:history.back(-1)' value=确定>
   </body>
 </html>
 

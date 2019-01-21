@@ -155,23 +155,24 @@ a{color:#fff;}
 <div id="app">
 <div class="w750">
   <div class="index_tab flexRowBetween">
-    <div class="tab_item" :data-num='0' @click="menuClick" :style="num=='0'?'color:#ed7101':''">
-        已拒绝
-    </div>
-    <div class="tab_item" :data-num='1' @click="menuClick" :style="num=='1'?'color:#ed7101':''">
+    
+    <div class="tab_item" :data-num='1' @click="buttonClick?'':menuClick($event)" :style="num=='1'?'color:#ed7101':''">
         待面试
     </div>
-    <div class="tab_item" :data-num='2' @click="menuClick" :style="num=='2'?'color:#ed7101':''">
+    <div class="tab_item" :data-num='2' @click="buttonClick?'':menuClick($event)" :style="num=='2'?'color:#ed7101':''">
         已入职
     </div>
-    <div class="tab_item" :data-num='3' @click="menuClick" :style="num=='3'?'color:#ed7101':''">
+    <div class="tab_item" :data-num='3' @click="buttonClick?'':menuClick($event)" :style="num=='3'?'color:#ed7101':''">
         已离职
+    </div>
+    <div class="tab_item" :data-num='0' @click="buttonClick?'':menuClick($event)" :style="num=='0'?'color:#ed7101':''">
+        已拒绝
     </div>
   </div>
   <div class="job" v-for="item in mainData">
     <div style="display: block">
       <div class="flexRowBetween" style="height:2.62rem;overflow:hidden;width:100%;margin-bottom:.14rem;">
-          <div style="width:87%;height:2.62rem;">
+          <div style="width:100%;height:2.62rem;">
               <div class="w710">
                   <div class="job_list flexRowBetween">
                       <div class="list_left">
@@ -204,14 +205,14 @@ a{color:#fff;}
                   </div>
               </div>
           </div>
-          <div class="handle">
-              <div class="handle_top">
+          <!--<div class="handle" v-if="num==1">
+              <div class="handle_top" @click="orderUpdate(index,4)">
                   <img src="images/interview2.png"/>
               </div>
-              <div class="handle_top handle_bottom">
+              <div class="handle_top handle_bottom" @click="orderUpdate(index,3)">
                   <img src="images/interview1.png"/>
               </div>
-          </div>
+          </div>-->
       </div>
     </div>
     <div>2</div>
@@ -249,15 +250,15 @@ a{color:#fff;}
                 searchItem:{
                 	user_type:0,
                   	passage1:localStorage.getItem('merchant_no'),
-                  	order_step:3
+                  	order_step:2
                 },
               
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-                num:'0',
-                 buttonClick:false,
-				isLoadAll:false
+                num:'1',
+                buttonClick:false,
+				        isLoadAll:false
             }   
 
         },
@@ -347,8 +348,12 @@ a{color:#fff;}
                 window.base.orderGet(postData,callback);
             },  
 
+
+           
+
             menuClick(e){
             	const  self = this;
+              self.buttonClick = true;
             	self.num = window.base.getDataSet(e).num;
             	self.changeSearch(self.num)
             },

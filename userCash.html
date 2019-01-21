@@ -129,7 +129,7 @@
                        {{userData.nickname}}
                     </div>
                     <div class="flex">
-                      <a class="flex" style="width:60%;height:40%;" href="userCashCard.html">
+                      <a class="flex" style="width:60%;height:40%;" @click="intoCashCard">
                           <div class="flex" style="margin-right:.34rem;">
                               <div class="user_card" style="margin-right:.14rem;"><img src="images/accout1.png" /></div>
                               <div class="font32 color1">绑定银行卡</div>
@@ -248,7 +248,8 @@
                 pageArray:[],
                 allPages:0,
                 linkPage:'',
-                buttonClicked:false
+                buttonClicked:false,
+                token:''
             }
 
         },
@@ -344,6 +345,10 @@
               window.base.flowLogCompute(postData,callback);
             },
 
+            intoCashCard(){
+	        const self = this;
+	        window.location.href = 'userCashCard.html?token='+localStorage.getItem('user_token');
+	        },
 
             intoDetail(e) {
                 var self = this;

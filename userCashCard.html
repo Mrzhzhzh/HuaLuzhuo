@@ -204,14 +204,12 @@ a{color:#fff;}
         },
         
         created: function () {
-          var callback = (res)=>{
+      
             this.userGet();
             //this.wxJsSdk();
-          };
-          window.base.getUserToken(callback);
+         
           
-            
-
+      
         },
 
         methods:{
@@ -265,7 +263,7 @@ a{color:#fff;}
             var ua = navigator.userAgent.toLowerCase();
 			      self.isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
             const postData = {};
-            postData.token =localStorage.getItem('user_token');
+            postData.token =window.base.GetRequest().token;
             const callback = (res)=>{
               if(res.info.data.length>0){
                 self.mainData = res.info.data[0];
@@ -285,7 +283,7 @@ a{color:#fff;}
     				var param = new FormData();
     				param.append('file',file,file.name);
     				param.append('thirdapp_id',2);
-    				param.append('token',localStorage.getItem('user_token'));
+    				param.append('token',window.base.GetRequest().token);
     				var callback = function (res) {
     					if(res.solely_code==100000&&res.info&&res.info.url){ 
         				self.submitData.mainImg.push({url:res.info.url});
@@ -307,7 +305,7 @@ a{color:#fff;}
           userInfoUpdate(){
             const self = this;
             const postData = {};
-            postData.token =localStorage.getItem('user_token');
+            postData.token =window.base.GetRequest().token;
             postData.data = {};
             postData.data = window.base.cloneForm(self.submitData);
             const callback = (data)=>{
@@ -603,10 +601,5 @@ a{color:#fff;}
 
 </body>
 
-<script src="js/vconsole.min.js"></script>
-<script>
-  // init vConsole
-  var vConsole = new VConsole();
-  console.log('Hello world');
-</script>
+
 </html>

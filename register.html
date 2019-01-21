@@ -209,7 +209,7 @@
 				var param = new FormData();
 				param.append('file',file,file.name);
 				param.append('thirdapp_id',2);
-				param.append('token',localStorage.getItem('user_token'));
+				param.append('token',window.base.GetRequest().token);
 				var callback = function (res) {
 					if(res.solely_code==100000&&res.info&&res.info.url){ 
           				self.submitData.mainImg.push({url:res.info.url})

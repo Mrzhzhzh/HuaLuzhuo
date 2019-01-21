@@ -100,7 +100,10 @@
       <div class="input_before">
         学历:
       </div>
-      <input v-model='submitData.qualifications'></input>
+      <select id="pid"  data-key="qualifications" @change="selectChange" style="width:2rem;height:0.72rem;" > 
+          <option >请选择</a> 
+          <option v-for="item in labelDataThree">{{item.title}}</option> 
+      </select> 
     </div>
     <div class="bank_card flexRowBetween">
       <div class="input_before">
@@ -229,6 +232,7 @@
                 cityData:[],
                 labelData:[],
                 labelDataTwo:[],
+                labelDataThree:[],
                 submitData:{
                   category_id:33,
                   title:'',
@@ -279,6 +283,7 @@
             var callback = (res)=>{
               this.getLabelData();
               this.getLabelDataTwo();
+              this.getLabelDataThree();
               this.getCityData();
             };
             window.base.getMerchantToken(callback);
@@ -362,6 +367,34 @@
               const callback = (res)=>{
                 if(res.info.data.length>0){
                   self.labelDataTwo.push.apply(self.labelDataTwo,res.info.data);
+                }else{
+                  alert('没有更多了');
+                };
+              };
+              window.base.labelGet(postData,callback);
+            },
+
+            getLabelDataThree(){
+              const self = this;
+              const postData = {};
+              postData.paginate = window.base.cloneForm(self.paginate);
+              postData.searchItem = {
+                thirdapp_id:2
+              };
+              postData.getBefore = {
+                labelData:{
+                  tableName:'label',
+                  searchItem:{
+                    title:['=',['学历']],
+                  },
+                  middleKey:'parentid',
+                  key:'id',
+                  condition:'in',
+                },
+              };
+              const callback = (res)=>{
+                if(res.info.data.length>0){
+                  self.labelDataThree.push.apply(self.labelDataThree,res.info.data);
                 }else{
                   alert('没有更多了');
                 };

@@ -75,7 +75,7 @@ a{color:#fff;}
                               <img src="images/navbar2-a.png">
                           </div>
                           <div class="company_introuce" >
-                              <div class="company_name avoidOverflow">{{item.user[0].name}}</div>
+                              <div class="company_name avoidOverflow">{{item.user[0]?item.user[0].name:''}}</div>
                               <div class="send_datail flexRowBetween">
                                   <div class="send_tiem font30">{{item.create_time}}</div>
                               </div>

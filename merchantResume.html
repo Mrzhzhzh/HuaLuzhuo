@@ -501,7 +501,6 @@ a{color:#fff;}
 
         getDistri(){
           const self = this;
-          
           const postData = {};
           postData.token = localStorage.getItem('merchant_token');
           postData.searchItem = {
@@ -522,7 +521,6 @@ a{color:#fff;}
           };
           const callback = (res)=>{
             self.distributionData = res;
-
           };
           window.base.distriGet(postData,callback);
         },  
