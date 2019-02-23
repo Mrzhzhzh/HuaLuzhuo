@@ -194,6 +194,19 @@ window.base={
         this.getData(allParams)
     },
 
+    uploadByUrl:function(param,callback) {
+  
+        var allParams = {
+            url:'Base/FtpImage/uploadByUrl',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        }; 
+        this.getData(allParams)
+    },
+
     upLoadImg:function(param,callback) {
         var that=this;
         alert('upLoadImg999')
